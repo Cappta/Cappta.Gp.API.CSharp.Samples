@@ -1,0 +1,48 @@
+[2017-10-19 12:15:48] Error
+JsonReaderException - Unexpected character encountered while parsing value: D. Path '', line 0, position 0.
+   em Newtonsoft.Json.JsonTextReader.ParseValue()
+   em Newtonsoft.Json.JsonTextReader.ReadInternal()
+   em Newtonsoft.Json.JsonTextReader.Read()
+   em Newtonsoft.Json.Linq.JObject.Load(JsonReader reader)
+   em Newtonsoft.Json.Linq.JObject.Parse(String json)
+   em Cappta.Gp.Api.Com.ResponseSerializer.Deserialize(String responseMessage)
+   em Cappta.Gp.Api.Com.NamedPipe.ServerMessageHandler.OnReceivedServerMessage(Object sender, ServerMessageEventArgs e)
+   em System.EventHandler`1.Invoke(Object sender, TEventArgs e)
+   em Cappta.Gp.Api.Com.NamedPipe.NamedPipeClientWrapper.OnServerMessage(NamedPipeConnection`2 connection, String message)
+   em NamedPipeWrapper.NamedPipeClient`2.OnReceiveMessage(NamedPipeConnection`2 connection, TRead message)
+   em NamedPipeWrapper.NamedPipeConnection`2.ReadPipe()
+   em NamedPipeWrapper.Threading.Worker.DoWorkImpl(Object oAction)
+
+
+[2017-10-19 12:16:01] Error
+JsonReaderException - Unexpected character encountered while parsing value: F. Path '', line 0, position 0.
+   em Newtonsoft.Json.JsonTextReader.ParseValue()
+   em Newtonsoft.Json.JsonTextReader.ReadInternal()
+   em Newtonsoft.Json.JsonTextReader.Read()
+   em Newtonsoft.Json.Linq.JObject.Load(JsonReader reader)
+   em Newtonsoft.Json.Linq.JObject.Parse(String json)
+   em Cappta.Gp.Api.Com.ResponseSerializer.Deserialize(String responseMessage)
+   em Cappta.Gp.Api.Com.NamedPipe.ServerMessageHandler.OnReceivedServerMessage(Object sender, ServerMessageEventArgs e)
+   em System.EventHandler`1.Invoke(Object sender, TEventArgs e)
+   em Cappta.Gp.Api.Com.NamedPipe.NamedPipeClientWrapper.OnServerMessage(NamedPipeConnection`2 connection, String message)
+   em NamedPipeWrapper.NamedPipeClient`2.OnReceiveMessage(NamedPipeConnection`2 connection, TRead message)
+   em NamedPipeWrapper.NamedPipeConnection`2.ReadPipe()
+   em NamedPipeWrapper.Threading.Worker.DoWorkImpl(Object oAction)
+
+
+[2017-10-19 12:16:22] Error
+JsonReaderException - Unexpected character encountered while parsing value: T. Path '', line 0, position 0.
+   em Newtonsoft.Json.JsonTextReader.ParseValue()
+   em Newtonsoft.Json.JsonTextReader.ReadInternal()
+   em Newtonsoft.Json.JsonTextReader.Read()
+   em Newtonsoft.Json.Linq.JObject.Load(JsonReader reader)
+   em Newtonsoft.Json.Linq.JObject.Parse(String json)
+   em Cappta.Gp.Api.Com.ResponseSerializer.Deserialize(String responseMessage)
+   em Cappta.Gp.Api.Com.NamedPipe.ServerMessageHandler.OnReceivedServerMessage(Object sender, ServerMessageEventArgs e)
+   em System.EventHandler`1.Invoke(Object sender, TEventArgs e)
+   em Cappta.Gp.Api.Com.NamedPipe.NamedPipeClientWrapper.OnServerMessage(NamedPipeConnection`2 connection, String message)
+   em NamedPipeWrapper.NamedPipeClient`2.OnReceiveMessage(NamedPipeConnection`2 connection, TRead message)
+   em NamedPipeWrapper.NamedPipeConnection`2.ReadPipe()
+   em NamedPipeWrapper.Threading.Worker.DoWorkImpl(Object oAction)
+
+

@@ -1,0 +1,423 @@
+﻿using Cappta.Gp.Api.Com.Model;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Cappta.Gp.Api.Com.Sample
+{
+	public partial class FormularioSample : Form
+	{
+		private const int INTERVALO_MILISEGUNDOS = 500;
+
+		private bool processandoPagamento;
+
+		private ClienteCappta cliente;
+
+		private Dictionary<int, TipoParcelamento> tiposParcelamento;
+
+        private int tipoVia;
+		private int quantidadeCartoes;
+
+		private bool sessaoMultiTefEmAndamento;
+		private int FormatoCampo;
+
+		public FormularioSample()
+		{
+			InitializeComponent();
+        }
+
+		private void OnLoadFormularioSample(object sender, EventArgs e)
+		{
+			this.cliente = new ClienteCappta();
+			this.IniciarControles();
+		}
+
+        private void IniciarControles()
+        {
+			tiposParcelamento = new Dictionary<int, TipoParcelamento>();
+			tiposParcelamento.Add(0, TipoParcelamento.Administrativo);
+			tiposParcelamento.Add(1, TipoParcelamento.Loja);
+
+			ComboBoxTipoParcelamentoPagamentoCredito.SelectedIndex = 0;
+        }
+
+        private void AutenticarPdv()
+        {
+			string chaveAutenticacao = ConfigurationManager.AppSettings["ChaveAutenticacao"];
+			if (String.IsNullOrWhiteSpace(chaveAutenticacao)) { this.InvalidarAutenticacao("Chave de Autenticação inválida"); }
+
+			string cnpj = ConfigurationManager.AppSettings["Cnpj"];
+			if (String.IsNullOrWhiteSpace(cnpj) || cnpj.Length != 14)  { this.InvalidarAutenticacao("CNPJ inválido"); }
+
+			uint pdv;
+			if (UInt32.TryParse(ConfigurationManager.AppSettings["Pdv"], out pdv) == false || pdv == 0) 
+			{
+				this.InvalidarAutenticacao("PDV inválido");
+			}
+
+            int resultadoAutenticacao = cliente.AutenticarPdv(cnpj, pdv, chaveAutenticacao);
+			if (resultadoAutenticacao == 0) { return; }
+
+			String mensagem = Mensagens.ResourceManager.GetString(String.Format("RESULTADO_CAPPTA_{0}", resultadoAutenticacao));
+			MessageBox.Show(mensagem, "SAMPLE API COM", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			this.Close();
+		}
+
+		private void InvalidarAutenticacao(string mensagemErro) {
+			this.CriarMensagemErro(String.Format("{0}. Verifique seu valor no arquivo de configuração.", mensagemErro)); 
+			System.Environment.Exit(0);
+		}
+
+		private void OnRadioButtonPagamentoCreditoComParcelasCheckedChanged(object sender, EventArgs e)
+		{
+			ComboBoxTipoParcelamentoPagamentoCredito.Show();
+			LabelTipoParcelamentoPagamentoCredito.Show();
+			NumericUpDownQuantidadeParcelasPagamentoCredito.Show();
+			LabelQuantidadeParcelasPagamentoCredito.Show();
+		}
+
+		private void OnRadioButtonPagamentoCreditoSemParcelasCheckedChanged(object sender, EventArgs e)
+		{
+			ComboBoxTipoParcelamentoPagamentoCredito.Hide();
+			LabelTipoParcelamentoPagamentoCredito.Hide();
+			NumericUpDownQuantidadeParcelasPagamentoCredito.Hide();
+			LabelQuantidadeParcelasPagamentoCredito.Hide();
+		}
+
+		private void OnRadioButtonReimprimirUltimoCupomCheckedChanged(object sender, EventArgs e)
+		{
+			LabelNumeroControleReimpressaoCupom.Hide();
+			NumericUpDownNumeroControleReimpressaoCupom.Hide();
+		}
+
+		private void OnRadioButtonNaoReimprimirUltimoCupomCheckedChanged(object sender, EventArgs e)
+		{
+			LabelNumeroControleReimpressaoCupom.Show();
+			NumericUpDownNumeroControleReimpressaoCupom.Show();
+		}
+
+		private void OnButtonExecutaPagamentoDebitoClick(object sender, EventArgs e)
+		{
+<<<<<<< 9916d071eb1ecb1aa4bcfe59378163e6c22e0bd1
+			string cupomFiscal = NumericUpDownCupomFiscalPagamentoDebito.Value.ToString();
+			double valor = (double)NumericUpDownValorPagamentoDebito.Value;
+=======
+            this.AutenticarPdv();
+            string cupomFiscal = NumericUpDownCupomFiscalPagamentoDebito.Value.ToString();
+			decimal valor = NumericUpDownValorPagamentoDebito.Value;
+>>>>>>> [bug] change call authentication API when execute some paymentsinstead initialize sample
+
+			cliente.PagamentoDebito(cupomFiscal, valor);
+
+			this.processandoPagamento = true;
+			this.IterarOperacaoTef(cupomFiscal);
+		}
+
+		private void OnExecutaPagamentoCreditoClick(object sender, EventArgs e)
+		{
+<<<<<<< 9916d071eb1ecb1aa4bcfe59378163e6c22e0bd1
+			string cupomFiscal = NumericUpDownCupomFiscalPagamentoCredito.Value.ToString();
+			double valor = (double)NumericUpDownValorPagamentoCredito.Value;
+=======
+            this.AutenticarPdv();
+            string cupomFiscal = NumericUpDownCupomFiscalPagamentoCredito.Value.ToString();
+			decimal valor = NumericUpDownValorPagamentoCredito.Value;
+>>>>>>> [bug] change call authentication API when execute some paymentsinstead initialize sample
+			IDetalhesCredito details = new DetalhesCredito
+			{
+				QuantidadeParcelas = (int)NumericUpDownQuantidadeParcelasPagamentoCredito.Value,
+				TipoParcelamento = (int)this.tiposParcelamento[ComboBoxTipoParcelamentoPagamentoCredito.SelectedIndex],
+				TransacaoParcelada = RadioButtonPagamentoCreditoComParcelas.Checked
+			};
+
+			cliente.PagamentoCredito(cupomFiscal, valor, details);
+
+			this.processandoPagamento = true;
+			this.IterarOperacaoTef(cupomFiscal);
+		}
+
+		private void OnButtonExecutaPagamentoCrediarioClick(object sender, EventArgs e)
+		{
+<<<<<<< 9916d071eb1ecb1aa4bcfe59378163e6c22e0bd1
+			string cupomFiscal = NumericUpDownCupomFiscalPagamentoCrediario.Value.ToString();
+			double valor = (double)NumericUpDownValorPagamentoCrediario.Value;
+=======
+            this.AutenticarPdv();
+            string cupomFiscal = NumericUpDownCupomFiscalPagamentoCrediario.Value.ToString();
+			decimal valor = NumericUpDownValorPagamentoCrediario.Value;
+>>>>>>> [bug] change call authentication API when execute some paymentsinstead initialize sample
+			IDetalhesCrediario detalhes = new DetalhesCrediario
+			{
+				QuantidadeParcelas = (int)NumericUpDownQuantidadeParcelasPagamentoCrediario.Value,
+			};
+
+			cliente.PagamentoCrediario(cupomFiscal, valor, detalhes);
+
+			this.processandoPagamento = true;
+			this.IterarOperacaoTef(cupomFiscal);
+		}
+
+		private void OnButtonExecutaReimpressaoCupomClick(object sender, EventArgs e)
+		{
+            this.AutenticarPdv();
+            if (this.sessaoMultiTefEmAndamento == true)
+			{
+				this.CriarMensagemErro("Não é possível reimprimir um cupom com uma sessão multitef em andamento."); return;
+			}
+
+			string cupomFiscal = NumericUpDownCupomFiscalReimpressaoCupom.Value.ToString();
+
+            if (RadioButtonReimprimirUltimoCupom.Checked) { cliente.ReimprimirUltimoCupom(cupomFiscal,this.tipoVia); }
+			else
+			{
+				string numeroControle = NumericUpDownNumeroControleReimpressaoCupom.Value.ToString("00000000000");
+				cliente.ReimprimirCupom(cupomFiscal, numeroControle, this.tipoVia);
+			}
+
+			this.IterarOperacaoTef(cupomFiscal);
+		}
+
+		private void OnButtonExecutaCancelamentoClick(object sender, EventArgs e)
+		{
+            this.AutenticarPdv();
+            if (this.sessaoMultiTefEmAndamento == true)
+			{
+				this.CriarMensagemErro("Não é possível cancelar um pagamento com uma sessão multitef em andamento."); return;
+			}
+
+			string senhaAdministrativa = TextBoxSenhaAdministrativaCancelamento.Text;
+
+			if (String.IsNullOrEmpty(senhaAdministrativa)) { this.CriarMensagemErro("A senha administrativa não pode ser vazia."); return;}
+
+			string cupomFiscal = NumericUpDownCupomFiscalCancelamento.Value.ToString();
+			string numeroControle = NumericUpDownNumeroControleCancelamento.Value.ToString("00000000000");
+
+			cliente.CancelarPagamento(cupomFiscal, senhaAdministrativa, numeroControle);
+
+			this.IterarOperacaoTef(cupomFiscal);
+		}
+
+		private void CriarMensagemErro(string mensagem)
+		{
+			MessageBox.Show(mensagem, "Erro");
+		}
+
+		private void OnRadioButtonUsarMultiTefCheckedChanged(object sender, EventArgs e)
+		{
+            this.sessaoMultiTefEmAndamento = true;
+			this.LabelQuantidadeDePagamentosMultiTef.Show();
+			this.NumericUpDownQuantidadeDePagamentosMultiTef.Show();
+
+			this.quantidadeCartoes = (int)this.NumericUpDownQuantidadeDePagamentosMultiTef.Value;
+			this.cliente.IniciarMultiCartoes(this.quantidadeCartoes);
+		}
+
+		private void OnRadioButtonNaoUsarMultiTefCheckedChanged(object sender, EventArgs e)
+		{
+			this.sessaoMultiTefEmAndamento = false;
+			this.LabelQuantidadeDePagamentosMultiTef.Hide();
+			this.NumericUpDownQuantidadeDePagamentosMultiTef.Hide();
+		}
+
+		private void OnNumericUpDownQuantidadeDePagamentosMultiTefValueChanged(object sender, EventArgs e)
+		{
+			this.quantidadeCartoes = (int)this.NumericUpDownQuantidadeDePagamentosMultiTef.Value;
+		}
+
+		public void IterarOperacaoTef(string cupomFiscal)
+		{
+			if (this.RadioButtonUsarMultiTef.Enabled) { this.DesabilitarControlesMultiTef(); }
+			this.DesabilitarBotoes();
+
+			IIteracaoTef iteracaoTef = null;
+
+			do
+			{
+				if (this.cliente.CapptaGPIsWorking() == false) { FalhaDeComunicacaoComTef(); break; }
+
+				iteracaoTef = cliente.IterarOperacaoTef(cupomFiscal);
+
+				if (iteracaoTef is IMensagem)
+				{
+					this.ExibirMensagem((IMensagem)iteracaoTef);
+					Thread.Sleep(INTERVALO_MILISEGUNDOS);
+				}
+
+				if (iteracaoTef is IRequisicaoParametro) { 
+					this.RequisitarParametros((IRequisicaoParametro)iteracaoTef);
+					break;
+				}
+
+				if (iteracaoTef is IRespostaOperacaoRecusada) { this.ExibirDadosOperacaoRecusada((IRespostaOperacaoRecusada)iteracaoTef); }
+				if (iteracaoTef is IRespostaOperacaoAprovada)
+				{
+					this.ExibitDadosOperacaoAprovada((IRespostaOperacaoAprovada)iteracaoTef);
+					this.FinalizarPagamento(cupomFiscal);
+				}
+
+			} while (this.OperacaoNaoFinalizada(iteracaoTef));
+
+			if (this.sessaoMultiTefEmAndamento == false) { this.HabilitarControlesMultiTef(); }
+			this.HabilitarBotoes();
+		}
+
+		private void DesabilitarControlesMultiTef()
+		{
+			this.DesabilitarControle(RadioButtonUsarMultiTef);
+			this.DesabilitarControle(RadioButtonNaoUsarMultiTef);
+			this.DesabilitarControle(NumericUpDownQuantidadeDePagamentosMultiTef);
+		}
+
+		private void DesabilitarBotoes()
+		{
+			this.DesabilitarControle(ExecutarDebito);
+			this.DesabilitarControle(ExecutarCredito);
+			this.DesabilitarControle(ExecutarCrediario);
+			this.DesabilitarControle(ExecutarReimpressao);
+			this.DesabilitarControle(ExecutarCancelamento);
+		}
+
+		private void DesabilitarControle(Control controle)
+		{
+			controle.Enabled = false;
+			controle.Update();
+		}
+
+		private void RequisitarParametros(IRequisicaoParametro requisicaoParametros)
+		{
+			this.FormatoCampo = requisicaoParametros.FormatoCampo;
+
+			string input = Microsoft.VisualBasic.Interaction.InputBox(requisicaoParametros.Mensagem);
+			if (String.IsNullOrEmpty(input)) { return; }
+
+			this.cliente.EnviarResposta(input, requisicaoParametros.FormatoCampo);
+			this.IterarOperacaoTef("00000");
+			
+		}
+
+		private bool OperacaoNaoFinalizada(IIteracaoTef iteracaoTef)
+		{
+			return iteracaoTef.TipoIteracao != 1 && iteracaoTef.TipoIteracao != 2;
+		}
+
+		private void FalhaDeComunicacaoComTef()
+		{
+			String erro = "Não foi possível realizar a operação.";
+			this.AtualizarResultado("Não foi possível realizar a operação.");
+			MessageBox.Show(erro, "Erro");
+		}
+
+		private void ExibirMensagem(IMensagem mensagem)
+		{
+			this.AtualizarResultado(mensagem.Descricao);
+		}
+
+		private void ExibirDadosOperacaoRecusada(IRespostaOperacaoRecusada resposta)
+		{
+			this.AtualizarResultado(String.Format("Código: {0}{1}{2}", resposta.CodigoMotivo, Environment.NewLine, resposta.Motivo));
+		}
+
+		private void ExibitDadosOperacaoAprovada(IRespostaOperacaoAprovada resposta)
+		{
+			StringBuilder mensagemAprovada = new StringBuilder();
+
+			if (resposta.CupomCliente != null) { mensagemAprovada.Append(resposta.CupomCliente.Replace("\"", String.Empty)).AppendLine(); }
+			if (resposta.CupomLojista != null) { mensagemAprovada.Append(resposta.CupomLojista.Replace("\"", String.Empty)).AppendLine(); }
+			if (resposta.CupomReduzido != null) { mensagemAprovada.Append(resposta.CupomReduzido.Replace("\"", String.Empty)).AppendLine(); }
+
+
+			this.AtualizarResultado(mensagemAprovada.ToString());
+		}
+
+		private void FinalizarPagamento(String cupomFiscal)
+		{
+			if (this.processandoPagamento == false) { return; }
+			
+			if (this.sessaoMultiTefEmAndamento) { 
+				quantidadeCartoes--;
+				if (this.quantidadeCartoes > 0) { return; }
+			};
+
+			string mensagem = this.GerarMensagemTransacaoAprovada(); 
+
+			this.processandoPagamento = false;
+			this.sessaoMultiTefEmAndamento = false;
+
+			DialogResult result = MessageBox.Show(mensagem.ToString(), "Sample API COM", MessageBoxButtons.OKCancel, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+			if (result == System.Windows.Forms.DialogResult.OK) { this.cliente.ConfirmarPagamentos(cupomFiscal); }
+			else { this.cliente.DesfazerPagamentos(cupomFiscal); }
+		}
+
+		private string GerarMensagemTransacaoAprovada()
+		{
+			string mensagem = String.Format("Transaç{0} Aprovada{1}!!! {2} Clique em \"OK\" para confirmar a{1} transaç{0} e \"Cancelar\" para desfaze-la{1}.",
+					(this.sessaoMultiTefEmAndamento ? "ões" : "ão"), 
+					(this.sessaoMultiTefEmAndamento ? "s" : ""), 
+					Environment.NewLine);
+
+			return mensagem;
+		}
+
+		private void AtualizarResultado(String mensagem)
+		{
+			this.TextBoxResultado.Text = mensagem;
+			this.TextBoxResultado.Update();
+		}
+
+		private void HabilitarControlesMultiTef()
+		{
+			this.HabilitarControle(RadioButtonUsarMultiTef);
+			this.HabilitarControle(RadioButtonNaoUsarMultiTef);
+			this.HabilitarControle(NumericUpDownQuantidadeDePagamentosMultiTef);
+		}
+
+		private void HabilitarBotoes()
+		{
+			this.HabilitarControle(ExecutarDebito);
+			this.HabilitarControle(ExecutarCredito);
+			this.HabilitarControle(ExecutarCrediario);
+			this.HabilitarControle(ExecutarReimpressao);
+			this.HabilitarControle(ExecutarCancelamento);
+		}
+
+		private void HabilitarControle(Control controle)
+		{
+			controle.Enabled = true;
+			controle.Update();
+		}
+
+		private void ReimpressaoCupomTab_Click(object sender, EventArgs e)
+		{
+			
+		}
+
+		private void CancelamentoTab_Click(object sender, EventArgs e)
+		{
+			
+		}
+
+        private void OnRadioButtonReimprimirTodasViasOnCheckedChanged(object sender, EventArgs e)
+        {
+            this.tipoVia = 1;
+        }
+
+        private void OnRadioButtonReimprimirViaLojaCheckedChanged(object sender, EventArgs e)
+        {
+            this.tipoVia = 2;
+        }
+
+        private void OnRadioButtonReimprimirViaClienteCheckedChanged(object sender, EventArgs e)
+        {
+            this.tipoVia = 3;
+        }
+
+	}
+}

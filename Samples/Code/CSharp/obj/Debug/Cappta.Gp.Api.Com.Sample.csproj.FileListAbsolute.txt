@@ -1,0 +1,16 @@
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\obj\Debug\Cappta.Gp.Api.Com.Sample.csprojResolveAssemblyReference.cache
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\obj\Debug\Cappta.Gp.Api.Com.Sample.FormularioSample.resources
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\obj\Debug\Cappta.Gp.Api.Com.Sample.Mensagens.resources
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\obj\Debug\Cappta.Gp.Api.Com.Sample.Properties.Resources.resources
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\obj\Debug\Cappta.Gp.Api.Com.Sample.csproj.GenerateResource.Cache
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\bin\Debug\Cappta.Gp.Api.Com.Sample.exe.config
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\bin\Debug\Cappta.Gp.Api.Com.Sample.exe
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\bin\Debug\Cappta.Gp.Api.Com.Sample.pdb
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\bin\Debug\Cappta.Gp.Api.Com.dll
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\bin\Debug\Newtonsoft.Json.dll
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\bin\Debug\NamedPipeWrapper.dll
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\bin\Debug\Cappta.Gp.Api.Com.pdb
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\bin\Debug\Newtonsoft.Json.xml
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\bin\Debug\NamedPipeWrapper.xml
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\obj\Debug\Cappta.Gp.Api.Com.Sample.exe
+C:\Git\Cappta.Gp.Api.Com\Cappta.Gp.Api.Com.Sample\obj\Debug\Cappta.Gp.Api.Com.Sample.pdb

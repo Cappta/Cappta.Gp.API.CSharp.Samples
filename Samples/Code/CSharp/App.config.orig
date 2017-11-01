@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <startup> 
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/>
+    </startup>
+	<appSettings>
+		<add key="ChaveAutenticacao" value="00000000000000"/>
+		<add key="Cnpj" value="00000000000000"/>
+<<<<<<< 02d5c6ed0e15a008d67f91c00569234190f3b730
+		<add key="Pdv" value=""/>
+=======
+		<add key="Pdv" value="15"/>
+>>>>>>> [update] corrections asked by code review
+	</appSettings>
+</configuration>
