@@ -114,24 +114,11 @@ Dentro de IterarOperacaoTef() temos alguns métodos:
 
 
 ```javascript
-procedure TForm1.RequisitarParametros(requisicaoParametros: IRequisicaoParametro);
-var
-  parametro: string;
-  mensagemConvertida: string;
-  acao: Int32;
-begin
-    mensagemConvertida := AnsiToUtf8(requisicaoParametros.Mensagem);
-    parametro := InputBox('Sample API COM', mensagemConvertida, '');
-
-    if Length(parametro) = 0 then
-    begin
-       acao := 2;
-       parametro := ' ';
-    end
-    else begin acao := 1; end;
-
-    cliente.EnviarParametro(parametro, acao);
-end;
+private void RequisitarParametros(IRequisicaoParametro requisicaoParametros)
+	{
+		string input = Microsoft.VisualBasic.Interaction.InputBox(requisicaoParametros.Mensagem + Environment.NewLine + Environment.NewLine);
+		this.cliente.EnviarParametro(input, String.IsNullOrWhiteSpace(input) ? 2 : 1);
+		}
 
 ```
 
@@ -140,7 +127,7 @@ end;
 
 ```javascript
 string input = Microsoft.VisualBasic.Interaction.InputBox(requisicaoParametros.Mensagem + Environment.NewLine + Environment.NewLine);
-			this.cliente.EnviarParametro(input, String.IsNullOrWhiteSpace(input) ? 2 : 1);
+	this.cliente.EnviarParametro(input, String.IsNullOrWhiteSpace(input) ? 2 : 1);
 ```
 <h3>Exibir Dados Operacao Aprovada</h3>
 
@@ -148,11 +135,11 @@ string input = Microsoft.VisualBasic.Interaction.InputBox(requisicaoParametros.M
 
 StringBuilder mensagemAprovada = new StringBuilder();
 
-			if (resposta.CupomCliente != null) { mensagemAprovada.Append(resposta.CupomCliente.Replace("\"", String.Empty)).AppendLine().AppendLine(); }
-			if (resposta.CupomLojista != null) { mensagemAprovada.Append(resposta.CupomLojista.Replace("\"", String.Empty)).AppendLine(); }
-			if (resposta.CupomReduzido != null) { mensagemAprovada.Append(resposta.CupomReduzido.Replace("\"", String.Empty)).AppendLine(); }
+	if (resposta.CupomCliente != null) { mensagemAprovada.Append(resposta.CupomCliente.Replace("\"", String.Empty)).AppendLine().AppendLine(); }
+	if (resposta.CupomLojista != null) { mensagemAprovada.Append(resposta.CupomLojista.Replace("\"", String.Empty)).AppendLine(); }
+	if (resposta.CupomReduzido != null) { mensagemAprovada.Append(resposta.CupomReduzido.Replace("\"", String.Empty)).AppendLine(); }
 
-			this.AtualizarResultado(mensagemAprovada.ToString());
+	this.AtualizarResultado(mensagemAprovada.ToString());
 ```
 
 <h3>Finalizar Pagamento</h3>
@@ -160,20 +147,20 @@ StringBuilder mensagemAprovada = new StringBuilder();
 ```javascript
 if (this.processandoPagamento == false) { return; }
 
-			if (this.sessaoMultiTefEmAndamento)
-			{
-				quantidadeCartoes--;
-				if (this.quantidadeCartoes > 0) { return; }
-			};
+	if (this.sessaoMultiTefEmAndamento)
+	{
+		quantidadeCartoes--;
+		if (this.quantidadeCartoes > 0) { return; }
+};
 
-			string mensagem = this.GerarMensagemTransacaoAprovada();
+string mensagem = this.GerarMensagemTransacaoAprovada();
 
-			this.processandoPagamento = false;
-			this.sessaoMultiTefEmAndamento = false;
+this.processandoPagamento = false;
+this.sessaoMultiTefEmAndamento = false;
 
-			DialogResult result = MessageBox.Show(mensagem.ToString(), "Sample API COM", MessageBoxButtons.OKCancel, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-			if (result == System.Windows.Forms.DialogResult.OK) { this.cliente.ConfirmarPagamentos(); }
-			else { this.cliente.DesfazerPagamentos(); }
+DialogResult result = MessageBox.Show(mensagem.ToString(), "Sample API COM", MessageBoxButtons.OKCancel, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+if (result == System.Windows.Forms.DialogResult.OK) { this.cliente.ConfirmarPagamentos(); }
+	else { this.cliente.DesfazerPagamentos(); }
 ```
 
 <h1>Etapa 4</h1>
@@ -190,64 +177,64 @@ O primeiro é pagamento débito, o mais simples.
 
 ```javascript
 private void OnExecutaPagamentoDebitoClick(object sender, EventArgs e)
-		{
-			if (this.DeveIniciarMultiCartoes()) { this.IniciarMultiCartoes(); }
+{
+	if (this.DeveIniciarMultiCartoes()) { this.IniciarMultiCartoes(); }
 
-			double valor = (double)NumericUpDownValorPagamentoDebito.Value;
+	double valor = (double)NumericUpDownValorPagamentoDebito.Value;
 
-			if (this.DeveIniciarMultiCartoes()) { this.IniciarMultiCartoes(); }
+	if (this.DeveIniciarMultiCartoes()) { this.IniciarMultiCartoes(); }
 
-			int resultado = this.cliente.PagamentoDebito(valor);
-			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
+	int resultado = this.cliente.PagamentoDebito(valor);
+	if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
 
-			this.processandoPagamento = true;
-			this.IterarOperacaoTef();
-		}
+	this.processandoPagamento = true;
+	this.IterarOperacaoTef();
+}
 ```
 <h3>Agora pagamento credito:</h3>
 
 ```javascript
 private void OnExecutaPagamentoCreditoClick(object sender, EventArgs e)
-		{
-			if (this.DeveIniciarMultiCartoes()) { this.IniciarMultiCartoes(); }
+{
+	if (this.DeveIniciarMultiCartoes()) { this.IniciarMultiCartoes(); }
 
-			double valor = (double)NumericUpDownValorPagamentoCredito.Value;
-			IDetalhesCredito details = new DetalhesCredito
-			{
-				QuantidadeParcelas = (int)this.NumericUpDownQuantidadeParcelasPagamentoCredito.Value,
-				TipoParcelamento = (int)this.tiposParcelamento[ComboBoxTipoParcelamentoPagamentoCredito.SelectedIndex],
-				TransacaoParcelada = this.RadioButtonPagamentoCreditoComParcelas.Checked,
-			};
+	double valor = (double)NumericUpDownValorPagamentoCredito.Value;
+	IDetalhesCredito details = new DetalhesCredito
+	{
+		QuantidadeParcelas = (int)this.NumericUpDownQuantidadeParcelasPagamentoCredito.Value,
+		TipoParcelamento = (int)this.tiposParcelamento[ComboBoxTipoParcelamentoPagamentoCredito.SelectedIndex],
+		TransacaoParcelada = this.RadioButtonPagamentoCreditoComParcelas.Checked,
+	};
 
-			if (this.DeveIniciarMultiCartoes()) { this.IniciarMultiCartoes(); }
+	if (this.DeveIniciarMultiCartoes()) { this.IniciarMultiCartoes(); }
 
-			int resultado = this.cliente.PagamentoCredito(valor, details);
-			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
+	int resultado = this.cliente.PagamentoCredito(valor, details);
+	if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
 
-			this.processandoPagamento = true;
-			this.IterarOperacaoTef();
-		}
+	this.processandoPagamento = true;
+	this.IterarOperacaoTef();
+}
 ```
 
 <h3>Crediário </h3>
 
 ```javascript
 private void OnExecutaPagamentoCrediarioClick(object sender, EventArgs e)
-		{
-			double valor = (double)NumericUpDownValorPagamentoCrediario.Value;
-			IDetalhesCrediario detalhes = new DetalhesCrediario
-			{
-				QuantidadeParcelas = (int)NumericUpDownQuantidadeParcelasPagamentoCrediario.Value,
-			};
+{
+	double valor = (double)NumericUpDownValorPagamentoCrediario.Value;
+	IDetalhesCrediario detalhes = new DetalhesCrediario
+	{
+		QuantidadeParcelas = (int)NumericUpDownQuantidadeParcelasPagamentoCrediario.Value,
+	};
 
-			if (this.DeveIniciarMultiCartoes()) { this.IniciarMultiCartoes(); }
+	if (this.DeveIniciarMultiCartoes()) { this.IniciarMultiCartoes(); }
 
-			int resultado = this.cliente.PagamentoCrediario(valor, detalhes);
-			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
+	int resultado = this.cliente.PagamentoCrediario(valor, detalhes);
+	if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
 
-			this.processandoPagamento = true;
-			this.IterarOperacaoTef();
-		}
+	this.processandoPagamento = true;
+	this.IterarOperacaoTef();
+}
 ```
 
 <h1>Etapa 5 </h1>
@@ -268,22 +255,22 @@ Temos as seguintes formas:
 
 ```javascript
 private void OnButtonExecutaReimpressaoCupomClick(object sender, EventArgs e)
-		{
-			if (this.sessaoMultiTefEmAndamento == true)
-			{
-				this.CriarMensagemErroJanela("Não é possível reimprimir um cupom com uma sessão multitef em andamento."); return;
-			}
+{
+	if (this.sessaoMultiTefEmAndamento == true)
+{
+this.CriarMensagemErroJanela("Não é possível reimprimir um cupom com uma sessão multitef em andamento."); return;
+}
 
-			int resultado = this.RadioButtonReimprimirUltimoCupom.Checked
+	int resultado = this.RadioButtonReimprimirUltimoCupom.Checked
 
-				? this.cliente.ReimprimirUltimoCupom(this.tipoVia)
-				: this.cliente.ReimprimirCupom(this.NumericUpDownNumeroControleReimpressaoCupom.Value.ToString("00000000000"), this.tipoVia);
+		? this.cliente.ReimprimirUltimoCupom(this.tipoVia)
+		: this.cliente.ReimprimirCupom(this.NumericUpDownNumeroControleReimpressaoCupom.Value.ToString("00000000000"), this.tipoVia);
 
-			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
+	if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
 
-			this.processandoPagamento = false;
-			this.IterarOperacaoTef();
-		}
+	this.processandoPagamento = false;
+	this.IterarOperacaoTef();
+}
 
 ```
 
@@ -293,24 +280,24 @@ Para cancelar uma transação é preciso do número de controle e da senha admin
 
 ```javascript
 private void OnButtonExecutaCancelamentoClick(object sender, EventArgs e)
-		{
-			if (this.sessaoMultiTefEmAndamento == true)
-			{
-				this.CriarMensagemErroJanela("Não é possível cancelar um pagamento com uma sessão multitef em andamento."); return;
-			}
+{
+		if (this.sessaoMultiTefEmAndamento == true)
+	{
+		this.CriarMensagemErroJanela("Não é possível cancelar um pagamento com uma sessão multitef em andamento."); return;
+	}
 
-			string senhaAdministrativa = TextBoxSenhaAdministrativaCancelamento.Text;
+		string senhaAdministrativa = TextBoxSenhaAdministrativaCancelamento.Text;
 
-			if (String.IsNullOrEmpty(senhaAdministrativa)) { this.CriarMensagemErroJanela("A senha administrativa não pode ser vazia."); return; }
+		if (String.IsNullOrEmpty(senhaAdministrativa)) { this.CriarMensagemErroJanela("A senha administrativa não pode ser vazia."); return; }
 
-			string numeroControle = NumericUpDownNumeroControleCancelamento.Value.ToString("00000000000");
+		string numeroControle = NumericUpDownNumeroControleCancelamento.Value.ToString("00000000000");
 
-			int resultado = this.cliente.CancelarPagamento(senhaAdministrativa, numeroControle);
-			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
+		int resultado = this.cliente.CancelarPagamento(senhaAdministrativa, numeroControle);
+		if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
 
-			this.processandoPagamento = false;
-			this.IterarOperacaoTef();
-		}
+		this.processandoPagamento = false;
+		this.IterarOperacaoTef();
+}
 ```
 <h1> Etapa 6 </h1>
 
@@ -320,16 +307,16 @@ Multicartões ou MultiTef é uma forma de passar mais de um cartão em uma trans
 
 ```javascript
 private void IniciarMultiCartoes()
-		{
-			this.quantidadeCartoes = (int)this.NumericUpDownQuantidadeDePagamentosMultiTef.Value;
-			this.sessaoMultiTefEmAndamento = true;
-			this.cliente.IniciarMultiCartoes(this.quantidadeCartoes);
-		}
+	{
+		this.quantidadeCartoes = (int)this.NumericUpDownQuantidadeDePagamentosMultiTef.Value;
+		this.sessaoMultiTefEmAndamento = true;
+		this.cliente.IniciarMultiCartoes(this.quantidadeCartoes);
+	}
 
 ```
-
+<h6>
 Para o código completo basta clonar o repositório, qualquer dúvida entre em contato com o time de homologação e parceria Cappta.
-Quando completar a integração basta acessar nossa documentação e seguir os passos do nosso [roteiro](http://docs.desktop.cappta.com.br/docs). 
+Quando completar a integração basta acessar nossa documentação e seguir os passos do nosso [roteiro](http://docs.desktop.cappta.com.br/docs). </h6>
 =======
 **Configurando e usando:**
 
