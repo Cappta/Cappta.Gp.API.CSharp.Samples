@@ -326,12 +326,9 @@ Quando completar a integração basta acessar nossa documentação e seguir os p
 
 - Execute o CapptaGpPlus;
 
-- Extraia e abra o diretório Cappta.Gp.API.Delphi.Samples-master;
+- Extraia e abra o diretório Cappta.Gp.API.CSharp.Samples-master;
 
-- Abra o arquivo autenticacao.xml (Samples\Binaries\Delphi\Win32\Debug) em um editor de texto e configure os parametros "cnpj" e "pdv" com os dados fornecidos para instalação do CapptaGpPlus (não alterar a Chave de Autenticação); 
-**Ex.:**
- chaveAutenticacao>795180024C04479982560F61B3C2C06E</chaveAutenticacao
- cnpj>00000000000000</cnpj
- pdv>14</pdv
+- Abra o arquivo Cappta.Gp.Api.Com.Sample.exe.config (Samples\Binaries\CSharp) em um editor de texto e configure os parametros "Cnpj" e "Pdv" com os dados fornedidos para instalação do CapptaGpPlus (não alterar a Chave de Autenticação); 
+**Ex.:** authenticationKey: '795180024C04479982560F61B3C2C06E', merchantCnpj: '00000000000000', checkoutNumber: 14
 
-- Execute o SampleDelphi.exe ou use o código do projeto para fazer as transações de testes.
+- Execute o Cappta.Gp.Api.Com.Sample.exe ou use o código do projeto para fazer as transações de testes.
