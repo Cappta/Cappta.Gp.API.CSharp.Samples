@@ -6,7 +6,9 @@ Obs: Durante a instalação do CapptaGpPlus o mesmo encarrega-se de registrar a 
 
 <h3>Primeira etapa para integração.</h3></br>
 
- A primeira etapa consiste na importação do componente (dll) para dentro do projeto. Para isto siga os passos descritos na documentação.</br>
+ A primeira etapa consiste na importação do componente (dll) para dentro do projeto.</br>
+ No Visual Studio, abra a Solution Explorer, vá em referências e adicione a DLL.
+ 
 	
 A primeira função a ser utilizada é **AutenticarPdv()**.</br>
      
@@ -18,26 +20,26 @@ OBS: aqui utilizamos um xml para guardar os dados de autenticação
 
 ```javascript
 
-      private void AutenticarPdv()
-		{
-			var chaveAutenticacao = ConfigurationManager.AppSettings["ChaveAutenticacao"];
-			if (String.IsNullOrWhiteSpace(chaveAutenticacao)) { this.InvalidarAutenticacao("Chave de Autenticação inválida"); }
+   private void AutenticarPdv()
+   {
+	var chaveAutenticacao = ConfigurationManager.AppSettings["ChaveAutenticacao"];
+	if (String.IsNullOrWhiteSpace(chaveAutenticacao)) { this.InvalidarAutenticacao("Chave de Autenticação inválida"); }
 
-			var cnpj = ConfigurationManager.AppSettings["Cnpj"];
-			if (String.IsNullOrWhiteSpace(cnpj) || cnpj.Length != 14) { this.InvalidarAutenticacao("CNPJ inválido"); }
+	var cnpj = ConfigurationManager.AppSettings["Cnpj"];
+	if (String.IsNullOrWhiteSpace(cnpj) || cnpj.Length != 14) { this.InvalidarAutenticacao("CNPJ inválido"); }
 
-			int pdv;
-			if (Int32.TryParse(ConfigurationManager.AppSettings["Pdv"], out pdv) == false || pdv == 0)
-			{
-				this.InvalidarAutenticacao("PDV inválido");
-			}
+	int pdv;
+	if (Int32.TryParse(ConfigurationManager.AppSettings["Pdv"], out pdv) == false || pdv == 0)
+	{
+		this.InvalidarAutenticacao("PDV inválido");
+	}
 
-			int resultadoAutenticacao = this.cliente.AutenticarPdv(cnpj, pdv, chaveAutenticacao);
-			if (resultadoAutenticacao == 0) { return; }
+	int resultadoAutenticacao = this.cliente.AutenticarPdv(cnpj, pdv, chaveAutenticacao);
+	if (resultadoAutenticacao == 0) { return; }
 
-			String mensagem = Mensagens.ResourceManager.GetString(String.Format("RESULTADO_CAPPTA_{0}", resultadoAutenticacao));
-			this.ExibeMensagemAutenticacaoInvalida(resultadoAutenticacao);
-		}
+	String mensagem = Mensagens.ResourceManager.GetString(String.Format("RESULTADO_CAPPTA_{0}", resultadoAutenticacao));
+		this.ExibeMensagemAutenticacaoInvalida(resultadoAutenticacao);
+}
 ```
 O resultado para autenticação com sucesso é: 0
 
