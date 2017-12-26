@@ -5,7 +5,7 @@ A Dll da Cappta foi desenvolvida utilizando as melhores práticas de programaç�
 Obs: Durante a instalação do CapptaGpPlus o mesmo encarrega-se de registrar a DLL em seu computador.
 
 <h3>Primeira etapa para integração.</h3></br>
-
+Tempo estimado de 01:00 hora 
  A primeira etapa consiste na importação do componente (dll) para dentro do projeto. Para isto siga os passos descritos na documentação.</br>
 	
 A primeira função a ser utilizada é **AutenticarPdv()**.</br>
@@ -14,30 +14,56 @@ Para autenticar é necessário os seguintes dados: CNPJ, PDV e chave de autentic
 	
 Chave: 795180024C04479982560F61B3C2C06E </br>
 
-OBS: aqui utilizamos um xml para guardar os dados de autenticação
+OBS: aqui utilizamos um xml para guardar os dados de autenticação, App.config
+```javascrip
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0" />
+  </startup>
+  <appSettings>
+    <add key="ChaveAutenticacao" value="1B489E726C284CC78DE715C7399114BF" />
+    <add key="Cnpj" value="34555898000186" />
+    <add key="Pdv" value="6" />
+    <add key="ClientSettingsProvider.ServiceUri" value="" />
+  </appSettings>
+  <system.web>
+    <membership defaultProvider="ClientAuthenticationMembershipProvider">
+      <providers>
+        <add name="ClientAuthenticationMembershipProvider" type="System.Web.ClientServices.Providers.ClientFormsAuthenticationMembershipProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" />
+      </providers>
+    </membership>
+    <roleManager defaultProvider="ClientRoleProvider" enabled="true">
+      <providers>
+        <add name="ClientRoleProvider" type="System.Web.ClientServices.Providers.ClientRoleProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" cacheTimeout="86400" />
+      </providers>
+    </roleManager>
+  </system.web>
+</configuration>
+```
+Aconselhamos deixar visivel para o usuário onde configurar os dados para autenticação, a chave é unica para o sistema, esta não é alterada, mas o CNPJ e PDV precisam ser de fácil acesso.
 
 ```javascript
+ private void AutenticarPdv()
+{
+	string chaveAutenticacao = ConfigurationManager.AppSettings["ChaveAutenticacao"];
+	if (String.IsNullOrWhiteSpace(chaveAutenticacao)) { this.InvalidarAutenticacao("Chave de Autenticação inválida"); }
 
-      private void AutenticarPdv()
-		{
-			var chaveAutenticacao = ConfigurationManager.AppSettings["ChaveAutenticacao"];
-			if (String.IsNullOrWhiteSpace(chaveAutenticacao)) { this.InvalidarAutenticacao("Chave de Autenticação inválida"); }
+	var cnpj = ConfigurationManager.AppSettings["Cnpj"];
+	if (String.IsNullOrWhiteSpace(cnpj) || cnpj.Length != 14) { this.InvalidarAutenticacao("CNPJ inválido"); }
 
-			var cnpj = ConfigurationManager.AppSettings["Cnpj"];
-			if (String.IsNullOrWhiteSpace(cnpj) || cnpj.Length != 14) { this.InvalidarAutenticacao("CNPJ inválido"); }
+	int pdv;
+	if (Int32.TryParse(ConfigurationManager.AppSettings["Pdv"], out pdv) == false || pdv == 0)
+	{
+		this.InvalidarAutenticacao("PDV inválido");
+	}
 
-			int pdv;
-			if (Int32.TryParse(ConfigurationManager.AppSettings["Pdv"], out pdv) == false || pdv == 0)
-			{
-				this.InvalidarAutenticacao("PDV inválido");
-			}
+	int resultadoAutenticacao = this.cliente.AutenticarPdv(cnpj, pdv, chaveAutenticacao);
+	if (resultadoAutenticacao == 0) { return; }
 
-			int resultadoAutenticacao = this.cliente.AutenticarPdv(cnpj, pdv, chaveAutenticacao);
-			if (resultadoAutenticacao == 0) { return; }
-
-			String mensagem = Mensagens.ResourceManager.GetString(String.Format("RESULTADO_CAPPTA_{0}", resultadoAutenticacao));
-			this.ExibeMensagemAutenticacaoInvalida(resultadoAutenticacao);
-		}
+	String mensagem = Mensagens.ResourceManager.GetString(String.Format("RESULTADO_CAPPTA_{0}", resultadoAutenticacao));
+	this.ExibeMensagemAutenticacaoInvalida(resultadoAutenticacao);
+} 
 ```
 O resultado para autenticação com sucesso é: 0
 
@@ -45,6 +71,7 @@ O resultado para autenticação com sucesso é: 0
 	Toda vez que realizar uma ação com o GP, vai perceber que ele começa a exibir o código 2 para autenticação, não se preocupe é assim mesmo, para recuperar os estados do GP, vamos direto para a etapa 3.
 
 <h1> Etapa 2 </h1>
+Tempo estimado de 00:20 minutos
 
 Temos duas formas de integração, a visivel, onde a interação com o usuário fica por conta da Cappta, e a invisivel onde o form pode ser personalizado.
 
@@ -52,60 +79,58 @@ Temos duas formas de integração, a visivel, onde a interação com o usuário 
 <h3>Para configurar o modo de integração</h3>
 
 ```javascript
-  private void ConfigurarModoIntegracao(bool exibirInterface)
-		{
-			IConfiguracoes configs = new Configuracoes
-			{
-				ExibirInterface = exibirInterface
-			};
+private void ConfigurarModoIntegracao(bool exibirInterface)
+{
+	IConfiguracoes configs = new Configuracoes
+	{
+		ExibirInterface = exibirInterface
+	};
 
-			int resultado = cliente.Configurar(configs);
-			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
-		}
+	int resultado = cliente.Configurar(configs);
+	if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
+}
 ```
 
 <h1>Etapa 3</h1>
+Tempo estimado de 01:20
 
 Conforme mencionado acima a Iteração Tef é muito importante para o perfeito funcionamento da integração, toda as ações de venda e administrativas passam por esta função. 
 
 ```javascript
 public void IterarOperacaoTef()
-		{
-			if (this.RadioButtonUsarMultiTef.Enabled) { this.DesabilitarControlesMultiTef(); }
-			this.DesabilitarBotoes();
-			IIteracaoTef iteracaoTef = null;
+{
+    if (this.RadioButtonUsarMultiTef.Enabled) { this.DesabilitarControlesMultiTef(); }
+    this.DesabilitarBotoes();
+    IIteracaoTef iteracaoTef = null;
 
-			do
-			{
-				iteracaoTef = cliente.IterarOperacaoTef();
+    do
+	{
+		iteracaoTef = cliente.IterarOperacaoTef();
 
-				if (iteracaoTef is IMensagem)
-				{
-					this.ExibirMensagem((IMensagem)iteracaoTef);
-					Thread.Sleep(INTERVALO_MILISEGUNDOS);
-				}
-
-				if (iteracaoTef is IRequisicaoParametro) { this.RequisitarParametros((IRequisicaoParametro)iteracaoTef); }
-				if (iteracaoTef is IRespostaTransacaoPendente) { this.ResolverTransacaoPendente((IRespostaTransacaoPendente)iteracaoTef); }
-
-				if (iteracaoTef is IRespostaOperacaoRecusada) { this.ExibirDadosOperacaoRecusada((IRespostaOperacaoRecusada)iteracaoTef); }
-				if (iteracaoTef is IRespostaOperacaoAprovada)
-				{
-					this.ExibirDadosOperacaoAprovada((IRespostaOperacaoAprovada)iteracaoTef);
-					this.FinalizarPagamento();
-				}
-
-				if (iteracaoTef is IRespostaRecarga)
-				{
-					this.ExibirDadosDeRecarga((IRespostaRecarga)iteracaoTef);
-				}
-
-			} while (this.OperacaoNaoFinalizada(iteracaoTef));
-
-			if (this.sessaoMultiTefEmAndamento == false) { this.HabilitarControlesMultiTef(); }
-			this.HabilitarBotoes();
+		if (iteracaoTef is IMensagem)
+		{             
+			this.ExibirMensagem((IMensagem)iteracaoTef);
+			Thread.Sleep(INTERVALO_MILISEGUNDOS);                 
 		}
 
+		if (iteracaoTef is IRequisicaoParametro) { this.RequisitarParametros((IRequisicaoParametro)iteracaoTef); }
+		if (iteracaoTef is IRespostaTransacaoPendente) 
+		{ this.ResolverTransacaoPendente((IRespostaTransacaoPendente)iteracaoTef); }
+
+		if (iteracaoTef is IRespostaOperacaoRecusada)
+		{ this.ExibirDadosOperacaoRecusada((IRespostaOperacaoRecusada)iteracaoTef );  iteracaoTef.TipoIteracao.ToString(); }
+		
+		if (iteracaoTef.TipoIteracao == 1)
+		{
+		   this.ExibirDadosOperacaoAprovada((IRespostaOperacaoAprovada)iteracaoTef);
+                   FinalizarPagamento();
+		}     
+
+        } while (this.OperacaoNaoFinalizada(iteracaoTef) );
+
+  if (this.sessaoMultiTefEmAndamento == false) { this.HabilitarControlesMultiTef(); }//true
+  this.HabilitarBotoes();
+}
 ```
 
 Dentro de IterarOperacaoTef() temos alguns métodos:
@@ -115,10 +140,10 @@ Dentro de IterarOperacaoTef() temos alguns métodos:
 
 ```javascript
 private void RequisitarParametros(IRequisicaoParametro requisicaoParametros)
-	{
-		string input = Microsoft.VisualBasic.Interaction.InputBox(requisicaoParametros.Mensagem + Environment.NewLine + Environment.NewLine);
-		this.cliente.EnviarParametro(input, String.IsNullOrWhiteSpace(input) ? 2 : 1);
-		}
+  {
+      string input = Microsoft.VisualBasic.Interaction.InputBox(requisicaoParametros.Mensagem + Environment.NewLine + Environment.NewLine);
+      this.cliente.EnviarParametro(input, String.IsNullOrWhiteSpace(input) ? 2 : 1);
+  }
 
 ```
 
@@ -164,6 +189,7 @@ if (result == System.Windows.Forms.DialogResult.OK) { this.cliente.ConfirmarPaga
 ```
 
 <h1>Etapa 4</h1>
+Tempo estimado de 01:00 hora
 
 Parabéns agora falta pouco, lembrando que a qualquer momento você pode entrar em contato com a equipe tecnica.
 
@@ -239,6 +265,8 @@ private void OnExecutaPagamentoCrediarioClick(object sender, EventArgs e)
 
 <h1>Etapa 5 </h1>
 
+Tempo estimado de 00:40 minutos
+
 **Funções administrativas**
 
 Agora que tratamos as formas de pagamento, podemos partir para as funções administrativas. 
@@ -300,6 +328,8 @@ private void OnButtonExecutaCancelamentoClick(object sender, EventArgs e)
 }
 ```
 <h1> Etapa 6 </h1>
+
+Tempo estimado de 00:40 minutos
 
 Agora que ja fizemos 80% da integração precisamos trabalhar no Multicartões.
 
