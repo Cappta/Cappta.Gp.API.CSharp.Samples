@@ -6,6 +6,8 @@ Obs: Durante a instalação do CapptaGpPlus o mesmo encarrega-se de registrar a 
 
 <h3>Primeira etapa para integração.</h3></br>
 
+Tempo estimado de 01:00 hora
+
  A primeira etapa consiste na importação do componente (dll) para dentro do projeto.</br>
  No Visual Studio, abra a Solution Explorer, vá em referências e adicione a DLL.
  
@@ -16,7 +18,36 @@ Para autenticar é necessário os seguintes dados: CNPJ, PDV e chave de autentic
 	
 Chave: 795180024C04479982560F61B3C2C06E </br>
 
-OBS: aqui utilizamos um xml para guardar os dados de autenticação
+OBS: aqui utilizamos um xml para guardar os dados de autenticação.
+
+Em App.config:
+```javascript
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0" />
+  </startup>
+  <appSettings>
+    <add key="ChaveAutenticacao" value="1B489E726C284CC78DE715C7399114BF" />
+    <add key="Cnpj" value="34555898000186" />
+    <add key="Pdv" value="6" />
+    <add key="ClientSettingsProvider.ServiceUri" value="" />
+  </appSettings>
+  <system.web>
+    <membership defaultProvider="ClientAuthenticationMembershipProvider">
+      <providers>
+        <add name="ClientAuthenticationMembershipProvider" type="System.Web.ClientServices.Providers.ClientFormsAuthenticationMembershipProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" />
+      </providers>
+    </membership>
+    <roleManager defaultProvider="ClientRoleProvider" enabled="true">
+      <providers>
+        <add name="ClientRoleProvider" type="System.Web.ClientServices.Providers.ClientRoleProvider, System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" serviceUri="" cacheTimeout="86400" />
+      </providers>
+    </roleManager>
+  </system.web>
+</configuration>
+```
+Aconselhamos sempre deixar visivel e de fácil acesso para o usuário onde configurar o sistema para utilização do CapptaGpPlus.
 
 ```javascript
 
@@ -48,25 +79,42 @@ O resultado para autenticação com sucesso é: 0
 
 <h1> Etapa 2 </h1>
 
+Tempo estimado de 00:40 minutos
+
 Temos duas formas de integração, a visivel, onde a interação com o usuário fica por conta da Cappta, e a invisivel onde o form pode ser personalizado.
 
 
 <h3>Para configurar o modo de integração</h3>
 
 ```javascript
-  private void ConfigurarModoIntegracao(bool exibirInterface)
-		{
-			IConfiguracoes configs = new Configuracoes
-			{
-				ExibirInterface = exibirInterface
-			};
+ private void ConfigurarModoIntegracao(bool exibirInterface)
+{
+	IConfiguracoes configs = new Configuracoes
+	{
+		ExibirInterface = exibirInterface
+	};
 
-			int resultado = cliente.Configurar(configs);
-			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
-		}
+	int resultado = cliente.Configurar(configs);
+	if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
+}
 ```
 
+As mensagens de exceção, ficam em um Resources File:
+
+RESULTADO_CAPPTA_1	Não autorizado. Por favor, realize a autenticação para utilizar o CapptaGpPlus
+RESULTADO_CAPPTA_10	Uma reimpressão ou cancelamento foi executada dentro de uma sessão multi-cartões
+RESULTADO_CAPPTA_2	O CapptaGpPlus esta sendo inicializado, tente novamente em alguns instantes
+RESULTADO_CAPPTA_3	O formato da requisição recebida pelo CapptaGpPlus é inválido
+RESULTADO_CAPPTA_4	Operação cancelada pelo operador
+RESULTADO_CAPPTA_5	Pagamento não autorizado/pendente/não encontrado
+RESULTADO_CAPPTA_6	Pagamento ou cancelamento negados pela rede adquirente
+RESULTADO_CAPPTA_7	Ocorreu um erro interno no CapptaGpPlus
+RESULTADO_CAPPTA_8	Ocorreu um erro na comunicação entre a CappAPI e o CapptaGpPlus
+RESULTADO_CAPPTA_9	Não é possível realizar uma operação sem que se tenha finalizado o último pagamento
+
 <h1>Etapa 3</h1>
+
+Tempo estimado de 01:00 hora
 
 Conforme mencionado acima a Iteração Tef é muito importante para o perfeito funcionamento da integração, toda as ações de venda e administrativas passam por esta função. 
 
@@ -167,6 +215,8 @@ if (result == System.Windows.Forms.DialogResult.OK) { this.cliente.ConfirmarPaga
 
 <h1>Etapa 4</h1>
 
+Tempo estimado de 01:00 hora
+
 Parabéns agora falta pouco, lembrando que a qualquer momento você pode entrar em contato com a equipe tecnica.
 
 Tel: (11) 4302-6179.
@@ -241,6 +291,8 @@ private void OnExecutaPagamentoCrediarioClick(object sender, EventArgs e)
 
 <h1>Etapa 5 </h1>
 
+Tempo estimado de 01:00 hora
+
 **Funções administrativas**
 
 Agora que tratamos as formas de pagamento, podemos partir para as funções administrativas. 
@@ -302,6 +354,8 @@ private void OnButtonExecutaCancelamentoClick(object sender, EventArgs e)
 }
 ```
 <h1> Etapa 6 </h1>
+
+Tempo estimado de 00:40 minutos
 
 Agora que ja fizemos 80% da integração precisamos trabalhar no Multicartões.
 
