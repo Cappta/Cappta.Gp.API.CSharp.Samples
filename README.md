@@ -5,8 +5,6 @@ A Dll da Cappta foi desenvolvida utilizando as melhores práticas de programaç�
 Obs: Durante a instalação do CapptaGpPlus o mesmo encarrega-se de registrar a DLL em seu computador.
 
 <h3>Primeira etapa para integração.</h3></br>
-Tempo estimado de 01:00 hora 
- A primeira etapa consiste na importação do componente (dll) para dentro do projeto. Para isto siga os passos descritos na documentação.</br>
 	
 A primeira função a ser utilizada é **AutenticarPdv()**.</br>
      
@@ -62,8 +60,7 @@ Aconselhamos deixar visivel para o usuário onde configurar os dados para autent
 	if (resultadoAutenticacao == 0) { return; }
 
 	String mensagem = Mensagens.ResourceManager.GetString(String.Format("RESULTADO_CAPPTA_{0}", resultadoAutenticacao));
-	this.ExibeMensagemAutenticacaoInvalida(resultadoAutenticacao);
-} 
+
 ```
 O resultado para autenticação com sucesso é: 0
 
