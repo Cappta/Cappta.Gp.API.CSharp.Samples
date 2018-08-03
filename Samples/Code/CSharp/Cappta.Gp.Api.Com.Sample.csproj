@@ -79,6 +79,7 @@
 </Compile>
 <Compile Include="Program.cs" />
 <Compile Include="Properties\AssemblyInfo.cs" />
+<Compile Include="TaskManagerForm.cs" />
 <EmbeddedResource Include="FormularioSample.resx">
 <DependentUpon>FormularioSample.cs</DependentUpon>
 </EmbeddedResource>

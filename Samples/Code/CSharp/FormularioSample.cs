@@ -51,6 +51,7 @@ namespace Cappta.Gp.Api.Com.Sample
 			this.CarregarOperadorasRecarga();
 			this.ConfigurarModoIntegracao(true);
 			this.ListarLojas();
+			this.HabilitarBotoes();
 		}
 
 		private void IniciarControles()
@@ -74,7 +75,7 @@ namespace Cappta.Gp.Api.Com.Sample
 			NumericUpDownNumeroRecarga.Minimum = 10000000;
 			NumericUpDownNumeroRecarga.Maximum = 999999999;
 			NumericUpDownDDDRecarga.DecimalPlaces = 0;
-			
+
 			#endregion
 		}
 
@@ -121,7 +122,10 @@ namespace Cappta.Gp.Api.Com.Sample
 
 			if (detalhesOperadoras != null)
 			{
-				this.ComboBoxOperadorasRecarga.Items.AddRange(detalhesOperadoras.Operadoras.ToArray());
+				if (detalhesOperadoras.Operadoras != null)
+				{
+					this.ComboBoxOperadorasRecarga.Items.AddRange(detalhesOperadoras.Operadoras.ToArray());
+				}
 			}
 		}
 
@@ -152,6 +156,8 @@ namespace Cappta.Gp.Api.Com.Sample
 			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
 
 			this.processandoPagamento = true;
+			this.HabilitarControle(ExecutarCancelarDebito);
+
 			this.IterarOperacaoTef();
 		}
 
@@ -173,6 +179,7 @@ namespace Cappta.Gp.Api.Com.Sample
 			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
 
 			this.processandoPagamento = true;
+			this.HabilitarControle(ExecutarCancelarCredito);
 			this.IterarOperacaoTef();
 		}
 
@@ -190,6 +197,7 @@ namespace Cappta.Gp.Api.Com.Sample
 			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
 
 			this.processandoPagamento = true;
+			this.HabilitarControle(ExecutarCancelarCrediario);
 			this.IterarOperacaoTef();
 		}
 
@@ -224,6 +232,11 @@ namespace Cappta.Gp.Api.Com.Sample
 			this.cliente.IniciarMultiCartoes(this.quantidadeCartoes);
 		}
 
+		private void OnExecutarCancelamentoInivisivelClick(object sender, EventArgs e)
+		{
+			this.cliente.AbortarOperacao();
+		}
+
 		#endregion
 
 		#region Métodos Administrativos
@@ -237,8 +250,8 @@ namespace Cappta.Gp.Api.Com.Sample
 
 			int resultado = this.RadioButtonReimprimirUltimoCupom.Checked
 
-				? this.cliente.ReimprimirUltimoCupom(this.tipoVia)
-				: this.cliente.ReimprimirCupom(this.NumericUpDownNumeroControleReimpressaoCupom.Value.ToString("00000000000"), this.tipoVia);
+			  ? this.cliente.ReimprimirUltimoCupom(this.tipoVia)
+			  : this.cliente.ReimprimirCupom(this.NumericUpDownNumeroControleReimpressaoCupom.Value.ToString("00000000000"), this.tipoVia);
 
 			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
 
@@ -263,6 +276,9 @@ namespace Cappta.Gp.Api.Com.Sample
 			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
 
 			this.processandoPagamento = false;
+			//WARNING: Não aceita o método abort no cancelamento devido a um bug do scope
+			//TODO: Descomentar este trecho quando o bug for fechado
+			//this.HabilitarControle(ExecutarCancelarCancelamento);
 			this.IterarOperacaoTef();
 		}
 
@@ -293,39 +309,43 @@ namespace Cappta.Gp.Api.Com.Sample
 
 		public void IterarOperacaoTef()
 		{
-			if (this.RadioButtonUsarMultiTef.Enabled) { this.DesabilitarControlesMultiTef(); }
-			this.DesabilitarBotoes();
-			IIteracaoTef iteracaoTef = null;
-
-			do
+			TaskManagerForm.Start(() =>
 			{
-				iteracaoTef = cliente.IterarOperacaoTef();
 
-				if (iteracaoTef is IMensagem)
+				if (this.RadioButtonUsarMultiTef.Enabled) { this.DesabilitarControlesMultiTef(); }
+				this.DesabilitarBotoes();
+				IIteracaoTef iteracaoTef = null;
+
+				do
 				{
-					this.ExibirMensagem((IMensagem)iteracaoTef);
-					Thread.Sleep(INTERVALO_MILISEGUNDOS);
-				}
+					iteracaoTef = cliente.IterarOperacaoTef();
 
-				if (iteracaoTef is IRequisicaoParametro) { this.RequisitarParametros((IRequisicaoParametro)iteracaoTef); }
-				if (iteracaoTef is IRespostaTransacaoPendente) { this.ResolverTransacaoPendente((IRespostaTransacaoPendente)iteracaoTef); }
+					if (iteracaoTef is IMensagem)
+					{
+						this.ExibirMensagem((IMensagem)iteracaoTef);
+						Thread.Sleep(INTERVALO_MILISEGUNDOS);
+					}
 
-				if (iteracaoTef is IRespostaOperacaoRecusada) { this.ExibirDadosOperacaoRecusada((IRespostaOperacaoRecusada)iteracaoTef); }
-				if (iteracaoTef is IRespostaOperacaoAprovada)
-				{
-					this.ExibirDadosOperacaoAprovada((IRespostaOperacaoAprovada)iteracaoTef);
-					this.FinalizarPagamento();
-				}
+					if (iteracaoTef is IRequisicaoParametro) { this.RequisitarParametros((IRequisicaoParametro)iteracaoTef); }
+					if (iteracaoTef is IRespostaTransacaoPendente) { this.ResolverTransacaoPendente((IRespostaTransacaoPendente)iteracaoTef); }
 
-				if (iteracaoTef is IRespostaRecarga)
-				{
-					this.ExibirDadosDeRecarga((IRespostaRecarga)iteracaoTef);
-				}
+					if (iteracaoTef is IRespostaOperacaoRecusada) { this.ExibirDadosOperacaoRecusada((IRespostaOperacaoRecusada)iteracaoTef); }
+					if (iteracaoTef is IRespostaOperacaoAprovada)
+					{
+						this.ExibirDadosOperacaoAprovada((IRespostaOperacaoAprovada)iteracaoTef);
+						this.FinalizarPagamento();
+					}
 
-			} while (this.OperacaoNaoFinalizada(iteracaoTef));
+					if (iteracaoTef is IRespostaRecarga)
+					{
+						this.ExibirDadosDeRecarga((IRespostaRecarga)iteracaoTef);
+					}
 
-			if (this.sessaoMultiTefEmAndamento == false) { this.HabilitarControlesMultiTef(); }
-			this.HabilitarBotoes();
+				} while (this.OperacaoNaoFinalizada(iteracaoTef));
+
+				if (this.sessaoMultiTefEmAndamento == false) { this.HabilitarControlesMultiTef(); }
+				this.HabilitarBotoes();
+			});
 		}
 
 		private void DesabilitarControlesMultiTef()
@@ -342,12 +362,17 @@ namespace Cappta.Gp.Api.Com.Sample
 			this.DesabilitarControle(ExecutarCrediario);
 			this.DesabilitarControle(ExecutarReimpressao);
 			this.DesabilitarControle(ExecutarCancelamento);
+			this.DesabilitarControle(ExecutarTicketCar);
+			this.DesabilitarControle(ButtonSolicitarInformacaoPinpad);
 		}
 
 		private void DesabilitarControle(Control controle)
 		{
-			controle.Enabled = false;
-			controle.Update();
+			TaskManagerForm.InvokeControlAction(controle, (arg) =>
+			{
+				controle.Enabled = false;
+				controle.Update();
+			});
 		}
 
 		private void ExibirMensagem(IMensagem mensagem)
@@ -398,8 +423,11 @@ namespace Cappta.Gp.Api.Com.Sample
 
 		private void AtualizarResultado(String mensagem)
 		{
-			this.TextBoxResultado.Text = mensagem;
-			this.TextBoxResultado.Update();
+			TaskManagerForm.InvokeControlAction<Control>(this.TextBoxResultado, (arg) =>
+			{
+				this.TextBoxResultado.Text = mensagem;
+				this.TextBoxResultado.Update();
+			});
 		}
 
 		private void FinalizarPagamento()
@@ -451,12 +479,23 @@ namespace Cappta.Gp.Api.Com.Sample
 			this.HabilitarControle(ExecutarCrediario);
 			this.HabilitarControle(ExecutarReimpressao);
 			this.HabilitarControle(ExecutarCancelamento);
+			this.HabilitarControle(ExecutarCancelarDebito);
+			this.HabilitarControle(ExecutarTicketCar);
+			this.HabilitarControle(ButtonSolicitarInformacaoPinpad);
+
+			this.DesabilitarControle(ExecutarCancelarDebito);
+			this.DesabilitarControle(ExecutarCancelarCrediario);
+			this.DesabilitarControle(ExecutarCancelarCredito);
+			//this.DesabilitarControle(ExecutarCancelarCancelamento);
 		}
 
 		private void HabilitarControle(Control controle)
 		{
-			controle.Enabled = true;
-			controle.Update();
+			TaskManagerForm.InvokeControlAction(controle, (arg) =>
+			{
+				controle.Enabled = true;
+				controle.Update();
+			});
 		}
 
 		#endregion
@@ -680,10 +719,9 @@ namespace Cappta.Gp.Api.Com.Sample
 			this.AtualizarResultado(mensagemAprovada.ToString());
 		}
 
-
 		private void OnSolicitarInformacaoPinpadClick(object sender, EventArgs e)
 		{
-			var tipoDeEntrada = (int)ComboBoxTipoInformacaoPinpad.SelectedValue;
+			int tipoDeEntrada = (int)ComboBoxTipoInformacaoPinpad.SelectedValue;
 
 			IRequisicaoInformacaoPinpad requisicaoPinpad = new RequisicaoInformacaoPinpad
 			{
@@ -706,6 +744,29 @@ namespace Cappta.Gp.Api.Com.Sample
 			if (this.RadioButtonInterfaceVisivel.Checked == false) { return; }
 
 			this.ConfigurarModoIntegracao(true);
+		}
+
+		private void btnCriarPreAutorizacao_Click(object sender, EventArgs e)
+		{
+			double valor = (double)CriarPreAutorizacaoValor.Value;
+
+			int resultado = this.cliente.PreAutorizacaoPagamentoCredito(valor);
+			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
+
+			this.processandoPagamento = true;
+			this.IterarOperacaoTef();
+		}
+
+		private void btnCapturarPreAutorizacao_Click(object sender, EventArgs e)
+		{
+			string controle = txtCapturaPreAutorizacaoControle.Text;
+			double valor = (double)CapturaPreAutorizacaoValor.Value;
+
+			int resultado = this.cliente.CapturarPreAutorizacaoPagamentoCredito(controle, valor);
+			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
+
+			this.processandoPagamento = true;
+			this.IterarOperacaoTef();
 		}
 
 

@@ -42,6 +42,7 @@
 			this.RadioButtonReimprimirUltimoCupom = new System.Windows.Forms.RadioButton();
 			this.LabelReimprimirUltimoCupom = new System.Windows.Forms.Label();
 			this.PagamentoCrediarioTab = new System.Windows.Forms.TabPage();
+			this.ExecutarCancelarCrediario = new System.Windows.Forms.Button();
 			this.ExecutarCrediario = new System.Windows.Forms.Button();
 			this.GroupBoxDadosPagamentoCrediario = new System.Windows.Forms.GroupBox();
 			this.NumericUpDownValorPagamentoCrediario = new System.Windows.Forms.NumericUpDown();
@@ -49,6 +50,7 @@
 			this.LabelValorPagamentoCrediario = new System.Windows.Forms.Label();
 			this.LabelQuantidadeParcelasPagamentoCrediario = new System.Windows.Forms.Label();
 			this.PagamentoDebitoTab = new System.Windows.Forms.TabPage();
+			this.ExecutarCancelarDebito = new System.Windows.Forms.Button();
 			this.ExecutarDebito = new System.Windows.Forms.Button();
 			this.GroupBoxDadosPagamentoDebito = new System.Windows.Forms.GroupBox();
 			this.NumericUpDownValorPagamentoDebito = new System.Windows.Forms.NumericUpDown();
@@ -57,6 +59,7 @@
 			this.GroupBoxResultadoPagamentoDebito = new System.Windows.Forms.GroupBox();
 			this.TextBoxResultado = new System.Windows.Forms.TextBox();
 			this.PagamentoCreditoTab = new System.Windows.Forms.TabPage();
+			this.ExecutarCancelarCredito = new System.Windows.Forms.Button();
 			this.ExecutarCredito = new System.Windows.Forms.Button();
 			this.GroupBoxDadosPagamentoTicketCar = new System.Windows.Forms.GroupBox();
 			this.NumericUpDownQuantidadeParcelasPagamentoCredito = new System.Windows.Forms.NumericUpDown();
@@ -102,6 +105,22 @@
 			this.ComboBoxProdutosRecarga = new System.Windows.Forms.ComboBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.NumericUpDownValorRecarga = new System.Windows.Forms.NumericUpDown();
+			this.MultiLojaTab = new System.Windows.Forms.TabPage();
+			this.ButtonAtivarLoja = new System.Windows.Forms.Button();
+			this.SelecionarLojaGroupBox = new System.Windows.Forms.GroupBox();
+			this.ComboBoxCnpjLojas = new System.Windows.Forms.ComboBox();
+			this.SelecionarCnpjLabel = new System.Windows.Forms.Label();
+			this.tabPreAuth = new System.Windows.Forms.TabPage();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.CapturaPreAutorizacaoValor = new System.Windows.Forms.NumericUpDown();
+			this.label10 = new System.Windows.Forms.Label();
+			this.lblControle = new System.Windows.Forms.Label();
+			this.txtCapturaPreAutorizacaoControle = new System.Windows.Forms.TextBox();
+			this.btnCapturarPreAutorizacao = new System.Windows.Forms.Button();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.CriarPreAutorizacaoValor = new System.Windows.Forms.NumericUpDown();
+			this.label9 = new System.Windows.Forms.Label();
+			this.btnCriarPreAutorizacao = new System.Windows.Forms.Button();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -118,11 +137,6 @@
 			this.RadioButtonInterfaceVisivel = new System.Windows.Forms.RadioButton();
 			this.RadioButtonInterfaceInvisivel = new System.Windows.Forms.RadioButton();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.MultiLojaTab = new System.Windows.Forms.TabPage();
-			this.SelecionarLojaGroupBox = new System.Windows.Forms.GroupBox();
-			this.ComboBoxCnpjLojas = new System.Windows.Forms.ComboBox();
-			this.SelecionarCnpjLabel = new System.Windows.Forms.Label();
-			this.ButtonAtivarLoja = new System.Windows.Forms.Button();
 			this.ReimpressaoCupomTab.SuspendLayout();
 			this.GroupBoxDadosReimpressaoCupom.SuspendLayout();
 			this.PanelViaASerImprimida.SuspendLayout();
@@ -153,10 +167,15 @@
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownNumeroRecarga)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDDDRecarga)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownValorRecarga)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownQuantidadeDePagamentosMultiTef)).BeginInit();
-			this.panel1.SuspendLayout();
 			this.MultiLojaTab.SuspendLayout();
 			this.SelecionarLojaGroupBox.SuspendLayout();
+			this.tabPreAuth.SuspendLayout();
+			this.groupBox4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.CapturaPreAutorizacaoValor)).BeginInit();
+			this.groupBox3.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.CriarPreAutorizacaoValor)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownQuantidadeDePagamentosMultiTef)).BeginInit();
+			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// ReimpressaoCupomTab
@@ -330,6 +349,7 @@
 			// 
 			// PagamentoCrediarioTab
 			// 
+			this.PagamentoCrediarioTab.Controls.Add(this.ExecutarCancelarCrediario);
 			this.PagamentoCrediarioTab.Controls.Add(this.ExecutarCrediario);
 			this.PagamentoCrediarioTab.Controls.Add(this.GroupBoxDadosPagamentoCrediario);
 			this.PagamentoCrediarioTab.Location = new System.Drawing.Point(4, 22);
@@ -339,6 +359,17 @@
 			this.PagamentoCrediarioTab.TabIndex = 2;
 			this.PagamentoCrediarioTab.Text = "Pagamento Crediário";
 			this.PagamentoCrediarioTab.UseVisualStyleBackColor = true;
+			// 
+			// ExecutarCancelarCrediario
+			// 
+			this.ExecutarCancelarCrediario.Enabled = false;
+			this.ExecutarCancelarCrediario.Location = new System.Drawing.Point(201, 303);
+			this.ExecutarCancelarCrediario.Name = "ExecutarCancelarCrediario";
+			this.ExecutarCancelarCrediario.Size = new System.Drawing.Size(120, 28);
+			this.ExecutarCancelarCrediario.TabIndex = 27;
+			this.ExecutarCancelarCrediario.Text = "Cancelar Operação";
+			this.ExecutarCancelarCrediario.UseVisualStyleBackColor = true;
+			this.ExecutarCancelarCrediario.Click += new System.EventHandler(this.OnExecutarCancelamentoInivisivelClick);
 			// 
 			// ExecutarCrediario
 			// 
@@ -437,6 +468,7 @@
 			// 
 			// PagamentoDebitoTab
 			// 
+			this.PagamentoDebitoTab.Controls.Add(this.ExecutarCancelarDebito);
 			this.PagamentoDebitoTab.Controls.Add(this.ExecutarDebito);
 			this.PagamentoDebitoTab.Controls.Add(this.GroupBoxDadosPagamentoDebito);
 			this.PagamentoDebitoTab.Location = new System.Drawing.Point(4, 22);
@@ -447,6 +479,17 @@
 			this.PagamentoDebitoTab.TabIndex = 1;
 			this.PagamentoDebitoTab.Text = "Pagamento Débito";
 			this.PagamentoDebitoTab.UseVisualStyleBackColor = true;
+			// 
+			// ExecutarCancelarDebito
+			// 
+			this.ExecutarCancelarDebito.Enabled = false;
+			this.ExecutarCancelarDebito.Location = new System.Drawing.Point(201, 303);
+			this.ExecutarCancelarDebito.Name = "ExecutarCancelarDebito";
+			this.ExecutarCancelarDebito.Size = new System.Drawing.Size(120, 28);
+			this.ExecutarCancelarDebito.TabIndex = 26;
+			this.ExecutarCancelarDebito.Text = "Cancelar Operação";
+			this.ExecutarCancelarDebito.UseVisualStyleBackColor = true;
+			this.ExecutarCancelarDebito.Click += new System.EventHandler(this.OnExecutarCancelamentoInivisivelClick);
 			// 
 			// ExecutarDebito
 			// 
@@ -547,6 +590,7 @@
 			// 
 			// PagamentoCreditoTab
 			// 
+			this.PagamentoCreditoTab.Controls.Add(this.ExecutarCancelarCredito);
 			this.PagamentoCreditoTab.Controls.Add(this.ExecutarCredito);
 			this.PagamentoCreditoTab.Controls.Add(this.GroupBoxDadosPagamentoTicketCar);
 			this.PagamentoCreditoTab.Location = new System.Drawing.Point(4, 22);
@@ -557,6 +601,17 @@
 			this.PagamentoCreditoTab.TabIndex = 0;
 			this.PagamentoCreditoTab.Text = "Pagamento Crédito";
 			this.PagamentoCreditoTab.UseVisualStyleBackColor = true;
+			// 
+			// ExecutarCancelarCredito
+			// 
+			this.ExecutarCancelarCredito.Enabled = false;
+			this.ExecutarCancelarCredito.Location = new System.Drawing.Point(201, 303);
+			this.ExecutarCancelarCredito.Name = "ExecutarCancelarCredito";
+			this.ExecutarCancelarCredito.Size = new System.Drawing.Size(120, 28);
+			this.ExecutarCancelarCredito.TabIndex = 27;
+			this.ExecutarCancelarCredito.Text = "Cancelar Operação";
+			this.ExecutarCancelarCredito.UseVisualStyleBackColor = true;
+			this.ExecutarCancelarCredito.Click += new System.EventHandler(this.OnExecutarCancelamentoInivisivelClick);
 			// 
 			// ExecutarCredito
 			// 
@@ -813,6 +868,7 @@
 			this.TabTicketCar.Controls.Add(this.PinpadTab);
 			this.TabTicketCar.Controls.Add(this.tabPage2);
 			this.TabTicketCar.Controls.Add(this.MultiLojaTab);
+			this.TabTicketCar.Controls.Add(this.tabPreAuth);
 			this.TabTicketCar.Location = new System.Drawing.Point(9, 50);
 			this.TabTicketCar.Margin = new System.Windows.Forms.Padding(2);
 			this.TabTicketCar.Name = "TabTicketCar";
@@ -1105,6 +1161,196 @@
 			this.NumericUpDownValorRecarga.Size = new System.Drawing.Size(120, 20);
 			this.NumericUpDownValorRecarga.TabIndex = 5;
 			// 
+			// MultiLojaTab
+			// 
+			this.MultiLojaTab.Controls.Add(this.ButtonAtivarLoja);
+			this.MultiLojaTab.Controls.Add(this.SelecionarLojaGroupBox);
+			this.MultiLojaTab.Location = new System.Drawing.Point(4, 22);
+			this.MultiLojaTab.Name = "MultiLojaTab";
+			this.MultiLojaTab.Padding = new System.Windows.Forms.Padding(3);
+			this.MultiLojaTab.Size = new System.Drawing.Size(483, 335);
+			this.MultiLojaTab.TabIndex = 6;
+			this.MultiLojaTab.Text = "Multi Loja";
+			this.MultiLojaTab.UseVisualStyleBackColor = true;
+			// 
+			// ButtonAtivarLoja
+			// 
+			this.ButtonAtivarLoja.Location = new System.Drawing.Point(317, 290);
+			this.ButtonAtivarLoja.Name = "ButtonAtivarLoja";
+			this.ButtonAtivarLoja.Size = new System.Drawing.Size(126, 28);
+			this.ButtonAtivarLoja.TabIndex = 3;
+			this.ButtonAtivarLoja.Text = "Ativar Loja";
+			this.ButtonAtivarLoja.UseVisualStyleBackColor = true;
+			this.ButtonAtivarLoja.Click += new System.EventHandler(this.OnButtonAtivarLojaClick);
+			// 
+			// SelecionarLojaGroupBox
+			// 
+			this.SelecionarLojaGroupBox.Controls.Add(this.ComboBoxCnpjLojas);
+			this.SelecionarLojaGroupBox.Controls.Add(this.SelecionarCnpjLabel);
+			this.SelecionarLojaGroupBox.Location = new System.Drawing.Point(3, 7);
+			this.SelecionarLojaGroupBox.Name = "SelecionarLojaGroupBox";
+			this.SelecionarLojaGroupBox.Size = new System.Drawing.Size(440, 277);
+			this.SelecionarLojaGroupBox.TabIndex = 1;
+			this.SelecionarLojaGroupBox.TabStop = false;
+			this.SelecionarLojaGroupBox.Text = "Selecionar Loja";
+			// 
+			// ComboBoxCnpjLojas
+			// 
+			this.ComboBoxCnpjLojas.FormattingEnabled = true;
+			this.ComboBoxCnpjLojas.Location = new System.Drawing.Point(17, 58);
+			this.ComboBoxCnpjLojas.Name = "ComboBoxCnpjLojas";
+			this.ComboBoxCnpjLojas.Size = new System.Drawing.Size(388, 21);
+			this.ComboBoxCnpjLojas.TabIndex = 1;
+			// 
+			// SelecionarCnpjLabel
+			// 
+			this.SelecionarCnpjLabel.AutoSize = true;
+			this.SelecionarCnpjLabel.Location = new System.Drawing.Point(14, 31);
+			this.SelecionarCnpjLabel.Name = "SelecionarCnpjLabel";
+			this.SelecionarCnpjLabel.Size = new System.Drawing.Size(90, 13);
+			this.SelecionarCnpjLabel.TabIndex = 0;
+			this.SelecionarCnpjLabel.Text = "Selecionar CNPJ:";
+			// 
+			// tabPreAuth
+			// 
+			this.tabPreAuth.Controls.Add(this.groupBox4);
+			this.tabPreAuth.Controls.Add(this.groupBox3);
+			this.tabPreAuth.Location = new System.Drawing.Point(4, 22);
+			this.tabPreAuth.Name = "tabPreAuth";
+			this.tabPreAuth.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPreAuth.Size = new System.Drawing.Size(483, 335);
+			this.tabPreAuth.TabIndex = 7;
+			this.tabPreAuth.Text = "Pré Autorização";
+			this.tabPreAuth.UseVisualStyleBackColor = true;
+			// 
+			// groupBox4
+			// 
+			this.groupBox4.Controls.Add(this.CapturaPreAutorizacaoValor);
+			this.groupBox4.Controls.Add(this.label10);
+			this.groupBox4.Controls.Add(this.lblControle);
+			this.groupBox4.Controls.Add(this.txtCapturaPreAutorizacaoControle);
+			this.groupBox4.Controls.Add(this.btnCapturarPreAutorizacao);
+			this.groupBox4.Location = new System.Drawing.Point(15, 175);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(451, 139);
+			this.groupBox4.TabIndex = 1;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Confirmar Pré Autorização";
+			// 
+			// CapturaPreAutorizacaoValor
+			// 
+			this.CapturaPreAutorizacaoValor.DecimalPlaces = 2;
+			this.CapturaPreAutorizacaoValor.Location = new System.Drawing.Point(205, 54);
+			this.CapturaPreAutorizacaoValor.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+			this.CapturaPreAutorizacaoValor.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            131072});
+			this.CapturaPreAutorizacaoValor.Name = "CapturaPreAutorizacaoValor";
+			this.CapturaPreAutorizacaoValor.Size = new System.Drawing.Size(98, 20);
+			this.CapturaPreAutorizacaoValor.TabIndex = 6;
+			this.CapturaPreAutorizacaoValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.CapturaPreAutorizacaoValor.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            131072});
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(203, 33);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(31, 13);
+			this.label10.TabIndex = 5;
+			this.label10.Text = "Valor";
+			// 
+			// lblControle
+			// 
+			this.lblControle.AutoSize = true;
+			this.lblControle.Location = new System.Drawing.Point(19, 33);
+			this.lblControle.Name = "lblControle";
+			this.lblControle.Size = new System.Drawing.Size(46, 13);
+			this.lblControle.TabIndex = 4;
+			this.lblControle.Text = "Controle";
+			// 
+			// txtCapturaPreAutorizacaoControle
+			// 
+			this.txtCapturaPreAutorizacaoControle.Location = new System.Drawing.Point(19, 54);
+			this.txtCapturaPreAutorizacaoControle.Name = "txtCapturaPreAutorizacaoControle";
+			this.txtCapturaPreAutorizacaoControle.Size = new System.Drawing.Size(170, 20);
+			this.txtCapturaPreAutorizacaoControle.TabIndex = 3;
+			// 
+			// btnCapturarPreAutorizacao
+			// 
+			this.btnCapturarPreAutorizacao.Location = new System.Drawing.Point(331, 33);
+			this.btnCapturarPreAutorizacao.Name = "btnCapturarPreAutorizacao";
+			this.btnCapturarPreAutorizacao.Size = new System.Drawing.Size(105, 83);
+			this.btnCapturarPreAutorizacao.TabIndex = 1;
+			this.btnCapturarPreAutorizacao.Text = "Capturar Pré Autorização de Crédito";
+			this.btnCapturarPreAutorizacao.UseVisualStyleBackColor = true;
+			this.btnCapturarPreAutorizacao.Click += new System.EventHandler(this.btnCapturarPreAutorizacao_Click);
+			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.CriarPreAutorizacaoValor);
+			this.groupBox3.Controls.Add(this.label9);
+			this.groupBox3.Controls.Add(this.btnCriarPreAutorizacao);
+			this.groupBox3.Location = new System.Drawing.Point(15, 15);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(451, 132);
+			this.groupBox3.TabIndex = 0;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Criar Pré Autorização";
+			// 
+			// CriarPreAutorizacaoValor
+			// 
+			this.CriarPreAutorizacaoValor.DecimalPlaces = 2;
+			this.CriarPreAutorizacaoValor.Location = new System.Drawing.Point(22, 62);
+			this.CriarPreAutorizacaoValor.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+			this.CriarPreAutorizacaoValor.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            131072});
+			this.CriarPreAutorizacaoValor.Name = "CriarPreAutorizacaoValor";
+			this.CriarPreAutorizacaoValor.Size = new System.Drawing.Size(120, 20);
+			this.CriarPreAutorizacaoValor.TabIndex = 3;
+			this.CriarPreAutorizacaoValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.CriarPreAutorizacaoValor.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            131072});
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Location = new System.Drawing.Point(19, 39);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(31, 13);
+			this.label9.TabIndex = 2;
+			this.label9.Text = "Valor";
+			// 
+			// btnCriarPreAutorizacao
+			// 
+			this.btnCriarPreAutorizacao.Location = new System.Drawing.Point(331, 26);
+			this.btnCriarPreAutorizacao.Name = "btnCriarPreAutorizacao";
+			this.btnCriarPreAutorizacao.Size = new System.Drawing.Size(105, 88);
+			this.btnCriarPreAutorizacao.TabIndex = 0;
+			this.btnCriarPreAutorizacao.Text = "Criar Pré Autorização de Crédito";
+			this.btnCriarPreAutorizacao.UseVisualStyleBackColor = true;
+			this.btnCriarPreAutorizacao.Click += new System.EventHandler(this.btnCriarPreAutorizacao_Click);
+			// 
 			// label3
 			// 
 			this.label3.AutoSize = true;
@@ -1274,56 +1520,6 @@
 			this.panel1.Size = new System.Drawing.Size(245, 25);
 			this.panel1.TabIndex = 21;
 			// 
-			// MultiLojaTab
-			// 
-			this.MultiLojaTab.Controls.Add(this.ButtonAtivarLoja);
-			this.MultiLojaTab.Controls.Add(this.SelecionarLojaGroupBox);
-			this.MultiLojaTab.Location = new System.Drawing.Point(4, 22);
-			this.MultiLojaTab.Name = "MultiLojaTab";
-			this.MultiLojaTab.Padding = new System.Windows.Forms.Padding(3);
-			this.MultiLojaTab.Size = new System.Drawing.Size(483, 335);
-			this.MultiLojaTab.TabIndex = 6;
-			this.MultiLojaTab.Text = "Multi Loja";
-			this.MultiLojaTab.UseVisualStyleBackColor = true;
-			// 
-			// SelecionarLojaGroupBox
-			// 
-			this.SelecionarLojaGroupBox.Controls.Add(this.ComboBoxCnpjLojas);
-			this.SelecionarLojaGroupBox.Controls.Add(this.SelecionarCnpjLabel);
-			this.SelecionarLojaGroupBox.Location = new System.Drawing.Point(3, 7);
-			this.SelecionarLojaGroupBox.Name = "SelecionarLojaGroupBox";
-			this.SelecionarLojaGroupBox.Size = new System.Drawing.Size(440, 277);
-			this.SelecionarLojaGroupBox.TabIndex = 1;
-			this.SelecionarLojaGroupBox.TabStop = false;
-			this.SelecionarLojaGroupBox.Text = "Selecionar Loja";
-			// 
-			// ComboBoxCnpjLojas
-			// 
-			this.ComboBoxCnpjLojas.FormattingEnabled = true;
-			this.ComboBoxCnpjLojas.Location = new System.Drawing.Point(17, 58);
-			this.ComboBoxCnpjLojas.Name = "ComboBoxCnpjLojas";
-			this.ComboBoxCnpjLojas.Size = new System.Drawing.Size(388, 21);
-			this.ComboBoxCnpjLojas.TabIndex = 1;
-			// 
-			// SelecionarCnpjLabel
-			// 
-			this.SelecionarCnpjLabel.AutoSize = true;
-			this.SelecionarCnpjLabel.Location = new System.Drawing.Point(14, 31);
-			this.SelecionarCnpjLabel.Name = "SelecionarCnpjLabel";
-			this.SelecionarCnpjLabel.Size = new System.Drawing.Size(90, 13);
-			this.SelecionarCnpjLabel.TabIndex = 0;
-			this.SelecionarCnpjLabel.Text = "Selecionar CNPJ:";
-			// 
-			// ButtonAtivarLoja
-			// 
-			this.ButtonAtivarLoja.Location = new System.Drawing.Point(317, 290);
-			this.ButtonAtivarLoja.Name = "ButtonAtivarLoja";
-			this.ButtonAtivarLoja.Size = new System.Drawing.Size(126, 28);
-			this.ButtonAtivarLoja.TabIndex = 3;
-			this.ButtonAtivarLoja.Text = "Ativar Loja";
-			this.ButtonAtivarLoja.UseVisualStyleBackColor = true;
-			this.ButtonAtivarLoja.Click += new System.EventHandler(this.OnButtonAtivarLojaClick);
-			// 
 			// FormularioSample
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1382,12 +1578,19 @@
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownNumeroRecarga)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDDDRecarga)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownValorRecarga)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownQuantidadeDePagamentosMultiTef)).EndInit();
-			this.panel1.ResumeLayout(false);
-			this.panel1.PerformLayout();
 			this.MultiLojaTab.ResumeLayout(false);
 			this.SelecionarLojaGroupBox.ResumeLayout(false);
 			this.SelecionarLojaGroupBox.PerformLayout();
+			this.tabPreAuth.ResumeLayout(false);
+			this.groupBox4.ResumeLayout(false);
+			this.groupBox4.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.CapturaPreAutorizacaoValor)).EndInit();
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.CriarPreAutorizacaoValor)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownQuantidadeDePagamentosMultiTef)).EndInit();
+			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1490,6 +1693,20 @@
 		private System.Windows.Forms.GroupBox SelecionarLojaGroupBox;
 		private System.Windows.Forms.ComboBox ComboBoxCnpjLojas;
 		private System.Windows.Forms.Label SelecionarCnpjLabel;
+        private System.Windows.Forms.TabPage tabPreAuth;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnCriarPreAutorizacao;
+        private System.Windows.Forms.Button btnCapturarPreAutorizacao;
+        private System.Windows.Forms.TextBox txtCapturaPreAutorizacaoControle;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblControle;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown CriarPreAutorizacaoValor;
+        private System.Windows.Forms.NumericUpDown CapturaPreAutorizacaoValor;
+		private System.Windows.Forms.Button ExecutarCancelarDebito;
+		private System.Windows.Forms.Button ExecutarCancelarCrediario;
+		private System.Windows.Forms.Button ExecutarCancelarCredito;
 	}
 }
 
