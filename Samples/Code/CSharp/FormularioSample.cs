@@ -48,7 +48,6 @@ namespace Cappta.Gp.Api.Com.Sample
 			this.cliente = new ClienteCappta();
 			this.IniciarControles();
 			this.AutenticarPdv();
-			this.CarregarOperadorasRecarga();
 			this.ConfigurarModoIntegracao(true);
 			this.ListarLojas();
 			this.HabilitarBotoes();
@@ -64,17 +63,6 @@ namespace Cappta.Gp.Api.Com.Sample
 
 			ComboBoxTipoParcelamentoPagamentoCredito.SelectedIndex = 0;
 			ComboBoxTipoInformacaoPinpad.DataSource = Enum.GetValues(typeof(TipoInformacaoPinpad));
-
-			#endregion
-			#region Controles Recarga
-
-			ComboBoxProdutosRecarga.Enabled = false;
-			NumericUpDownValorRecarga.Enabled = false;
-			ExecutarRecarga.Enabled = false;
-			NumericUpDownNumeroRecarga.DecimalPlaces = 0;
-			NumericUpDownNumeroRecarga.Minimum = 10000000;
-			NumericUpDownNumeroRecarga.Maximum = 999999999;
-			NumericUpDownDDDRecarga.DecimalPlaces = 0;
 
 			#endregion
 		}
@@ -114,19 +102,6 @@ namespace Cappta.Gp.Api.Com.Sample
 		{
 			this.CriarMensagemErroJanela(String.Format("{0}. Verifique seu valor no arquivo de configuração.", mensagemErro));
 			Environment.Exit(0);
-		}
-
-		private void CarregarOperadorasRecarga()
-		{
-			IDetalhesOperadoras detalhesOperadoras = this.cliente.ObterOperadoras();
-
-			if (detalhesOperadoras != null)
-			{
-				if (detalhesOperadoras.Operadoras != null)
-				{
-					this.ComboBoxOperadorasRecarga.Items.AddRange(detalhesOperadoras.Operadoras.ToArray());
-				}
-			}
 		}
 
 		private void ConfigurarModoIntegracao(bool exibirInterface)
@@ -198,25 +173,6 @@ namespace Cappta.Gp.Api.Com.Sample
 
 			this.processandoPagamento = true;
 			this.HabilitarControle(ExecutarCancelarCrediario);
-			this.IterarOperacaoTef();
-		}
-
-		private void OnExecutarPagamentoTicketCarClick(object sender, EventArgs e)
-		{
-			int resultado = 0;
-			double valor = (double)NumericUpDownValorPagamentoTicketCar.Value;
-
-			var detalhesTicketCar = new DetalhesPagamentoTicketCarPessoaFisica
-			{
-				NumeroReciboFiscal = this.TextBoxDocumentoFiscal.Text,
-				NumeroSerialECF = this.TextBoxNumeroSerial.Text
-			};
-
-			resultado = cliente.PagamentoTicketCarPessoaFisica(valor, detalhesTicketCar);
-
-			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
-
-			this.processandoPagamento = true;
 			this.IterarOperacaoTef();
 		}
 
@@ -336,11 +292,6 @@ namespace Cappta.Gp.Api.Com.Sample
 						this.FinalizarPagamento();
 					}
 
-					if (iteracaoTef is IRespostaRecarga)
-					{
-						this.ExibirDadosDeRecarga((IRespostaRecarga)iteracaoTef);
-					}
-
 				} while (this.OperacaoNaoFinalizada(iteracaoTef));
 
 				if (this.sessaoMultiTefEmAndamento == false) { this.HabilitarControlesMultiTef(); }
@@ -362,7 +313,6 @@ namespace Cappta.Gp.Api.Com.Sample
 			this.DesabilitarControle(ExecutarCrediario);
 			this.DesabilitarControle(ExecutarReimpressao);
 			this.DesabilitarControle(ExecutarCancelamento);
-			this.DesabilitarControle(ExecutarTicketCar);
 			this.DesabilitarControle(ButtonSolicitarInformacaoPinpad);
 		}
 
@@ -480,7 +430,6 @@ namespace Cappta.Gp.Api.Com.Sample
 			this.HabilitarControle(ExecutarReimpressao);
 			this.HabilitarControle(ExecutarCancelamento);
 			this.HabilitarControle(ExecutarCancelarDebito);
-			this.HabilitarControle(ExecutarTicketCar);
 			this.HabilitarControle(ButtonSolicitarInformacaoPinpad);
 
 			this.DesabilitarControle(ExecutarCancelarDebito);
@@ -628,97 +577,6 @@ namespace Cappta.Gp.Api.Com.Sample
 			this.tipoVia = TIPO_VIA_CLIENTE;
 		}
 
-		private void OnComboBoxOperadorasRecargaSelectedValueChanged(object sender, EventArgs e)
-		{
-			ComboBoxProdutosRecarga.Items.Clear();
-			ComboBoxProdutosRecarga.SelectedItem = null;
-			ComboBoxProdutosRecarga.Text = "";
-
-			var operadora = (string)ComboBoxOperadorasRecarga.SelectedItem;
-			var produtos = this.cliente.ObterProdutosOperadoras(operadora).Produtos;
-			if (produtos == null)
-			{
-				ComboBoxProdutosRecarga.Enabled = false;
-			}
-			else
-			{
-				ComboBoxProdutosRecarga.Items.AddRange(produtos.ToArray());
-			}
-
-			ComboBoxProdutosRecarga.DisplayMember = "Name";
-			ComboBoxProdutosRecarga.Enabled = true;
-
-			this.CheckIfRequestIsValid();
-		}
-
-		private void OnComboBoxProdutosRecargaSelectedIndexChanged(object sender, EventArgs e)
-		{
-			var produto = ((IProdutoRecarga)this.ComboBoxProdutosRecarga.SelectedItem);
-			if (produto.IsVariable)
-			{
-				this.NumericUpDownValorRecarga.Enabled = true;
-				this.NumericUpDownValorRecarga.Increment = (decimal)produto.Increment;
-				this.NumericUpDownValorRecarga.Minimum = (decimal)produto.MinPrice;
-				this.NumericUpDownValorRecarga.Maximum = (decimal)produto.MaxPrice;
-			}
-			else
-			{
-				this.NumericUpDownValorRecarga.Minimum = (decimal)produto.MinPrice;
-				this.NumericUpDownValorRecarga.Maximum = (decimal)produto.MaxPrice;
-				this.NumericUpDownValorRecarga.Value = (decimal)produto.Price;
-			}
-			this.CheckIfRequestIsValid();
-		}
-
-		private void CheckIfRequestIsValid()
-		{
-			if (this.NumericUpDownDDDRecarga.Value > 0 && this.NumericUpDownNumeroRecarga.Value > 0 && ComboBoxProdutosRecarga.SelectedItem != null)
-			{
-				this.ExecutarRecarga.Enabled = true;
-			}
-			else
-			{
-				this.ExecutarRecarga.Enabled = false;
-			}
-		}
-
-		private void OnNumericUpDownNumeroRecargaValueChanged(object sender, EventArgs e)
-		{
-			this.CheckIfRequestIsValid();
-		}
-
-		private void OnNumericUpDownDDDRecargaValueChanged(object sender, EventArgs e)
-		{
-			this.CheckIfRequestIsValid();
-		}
-
-		private void OnExecutarRecargaClick(object sender, EventArgs e)
-		{
-			IDetalhesRecarga detalhes = new DetalhesRecarga
-			{
-				Celular = (int)this.NumericUpDownNumeroRecarga.Value,
-				Ddd = (int)this.NumericUpDownDDDRecarga.Value,
-				Produto = (IProdutoRecarga)ComboBoxProdutosRecarga.SelectedItem,
-				ValorRecarga = (double)this.NumericUpDownValorRecarga.Value
-			};
-
-			this.cliente.RecargaCelular(detalhes);
-			this.IterarOperacaoTef();
-		}
-
-		private void ExibirDadosDeRecarga(IRespostaRecarga resposta)
-		{
-			if (string.IsNullOrEmpty(resposta.CupomCliente)) { }
-
-			StringBuilder mensagemAprovada = new StringBuilder();
-
-			if (resposta.CupomCliente != null) { mensagemAprovada.Append(resposta.CupomCliente.Replace("\"", String.Empty)).AppendLine().AppendLine(); }
-			if (resposta.CupomLojista != null) { mensagemAprovada.Append(resposta.CupomLojista.Replace("\"", String.Empty)).AppendLine(); }
-
-
-			this.AtualizarResultado(mensagemAprovada.ToString());
-		}
-
 		private void OnSolicitarInformacaoPinpadClick(object sender, EventArgs e)
 		{
 			int tipoDeEntrada = (int)ComboBoxTipoInformacaoPinpad.SelectedValue;
@@ -745,30 +603,6 @@ namespace Cappta.Gp.Api.Com.Sample
 
 			this.ConfigurarModoIntegracao(true);
 		}
-
-		private void btnCriarPreAutorizacao_Click(object sender, EventArgs e)
-		{
-			double valor = (double)CriarPreAutorizacaoValor.Value;
-
-			int resultado = this.cliente.PreAutorizacaoPagamentoCredito(valor);
-			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
-
-			this.processandoPagamento = true;
-			this.IterarOperacaoTef();
-		}
-
-		private void btnCapturarPreAutorizacao_Click(object sender, EventArgs e)
-		{
-			string controle = txtCapturaPreAutorizacaoControle.Text;
-			double valor = (double)CapturaPreAutorizacaoValor.Value;
-
-			int resultado = this.cliente.CapturarPreAutorizacaoPagamentoCredito(controle, valor);
-			if (resultado != 0) { this.CriarMensagemErroPainel(resultado); return; }
-
-			this.processandoPagamento = true;
-			this.IterarOperacaoTef();
-		}
-
 
 		#endregion
 	}
