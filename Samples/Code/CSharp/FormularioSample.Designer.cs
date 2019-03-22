@@ -78,49 +78,16 @@
 			this.TextBoxSenhaAdministrativaCancelamento = new System.Windows.Forms.TextBox();
 			this.LabelSenhaAdministrativaCancelamento = new System.Windows.Forms.Label();
 			this.TabTicketCar = new System.Windows.Forms.TabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.GroupBoxTicketCar = new System.Windows.Forms.GroupBox();
-			this.TextBoxDocumentoFiscal = new System.Windows.Forms.TextBox();
-			this.TextBoxNumeroSerial = new System.Windows.Forms.TextBox();
-			this.LabelNumeroDocFiscal = new System.Windows.Forms.Label();
-			this.LabelNumeroSerial = new System.Windows.Forms.Label();
-			this.NumericUpDownValorPagamentoTicketCar = new System.Windows.Forms.NumericUpDown();
-			this.LabelValorTicketCar = new System.Windows.Forms.Label();
-			this.ExecutarTicketCar = new System.Windows.Forms.Button();
 			this.PinpadTab = new System.Windows.Forms.TabPage();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.LabelTipoEntradaPinpad = new System.Windows.Forms.Label();
 			this.ComboBoxTipoInformacaoPinpad = new System.Windows.Forms.ComboBox();
 			this.ButtonSolicitarInformacaoPinpad = new System.Windows.Forms.Button();
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.ExecutarRecarga = new System.Windows.Forms.Button();
-			this.label4 = new System.Windows.Forms.Label();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.ComboBoxOperadorasRecarga = new System.Windows.Forms.ComboBox();
-			this.label7 = new System.Windows.Forms.Label();
-			this.NumericUpDownNumeroRecarga = new System.Windows.Forms.NumericUpDown();
-			this.NumericUpDownDDDRecarga = new System.Windows.Forms.NumericUpDown();
-			this.label5 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.ComboBoxProdutosRecarga = new System.Windows.Forms.ComboBox();
-			this.label6 = new System.Windows.Forms.Label();
-			this.NumericUpDownValorRecarga = new System.Windows.Forms.NumericUpDown();
 			this.MultiLojaTab = new System.Windows.Forms.TabPage();
 			this.ButtonAtivarLoja = new System.Windows.Forms.Button();
 			this.SelecionarLojaGroupBox = new System.Windows.Forms.GroupBox();
 			this.ComboBoxCnpjLojas = new System.Windows.Forms.ComboBox();
 			this.SelecionarCnpjLabel = new System.Windows.Forms.Label();
-			this.tabPreAuth = new System.Windows.Forms.TabPage();
-			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.CapturaPreAutorizacaoValor = new System.Windows.Forms.NumericUpDown();
-			this.label10 = new System.Windows.Forms.Label();
-			this.lblControle = new System.Windows.Forms.Label();
-			this.txtCapturaPreAutorizacaoControle = new System.Windows.Forms.TextBox();
-			this.btnCapturarPreAutorizacao = new System.Windows.Forms.Button();
-			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.CriarPreAutorizacaoValor = new System.Windows.Forms.NumericUpDown();
-			this.label9 = new System.Windows.Forms.Label();
-			this.btnCriarPreAutorizacao = new System.Windows.Forms.Button();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -157,23 +124,10 @@
 			this.GroupBoxDadosCancelamento.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownNumeroControleCancelamento)).BeginInit();
 			this.TabTicketCar.SuspendLayout();
-			this.tabPage1.SuspendLayout();
-			this.GroupBoxTicketCar.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownValorPagamentoTicketCar)).BeginInit();
 			this.PinpadTab.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			this.tabPage2.SuspendLayout();
-			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownNumeroRecarga)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDDDRecarga)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownValorRecarga)).BeginInit();
 			this.MultiLojaTab.SuspendLayout();
 			this.SelecionarLojaGroupBox.SuspendLayout();
-			this.tabPreAuth.SuspendLayout();
-			this.groupBox4.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.CapturaPreAutorizacaoValor)).BeginInit();
-			this.groupBox3.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.CriarPreAutorizacaoValor)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownQuantidadeDePagamentosMultiTef)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
@@ -864,125 +818,14 @@
 			this.TabTicketCar.Controls.Add(this.PagamentoCrediarioTab);
 			this.TabTicketCar.Controls.Add(this.ReimpressaoCupomTab);
 			this.TabTicketCar.Controls.Add(this.CancelamentoTab);
-			this.TabTicketCar.Controls.Add(this.tabPage1);
 			this.TabTicketCar.Controls.Add(this.PinpadTab);
-			this.TabTicketCar.Controls.Add(this.tabPage2);
 			this.TabTicketCar.Controls.Add(this.MultiLojaTab);
-			this.TabTicketCar.Controls.Add(this.tabPreAuth);
 			this.TabTicketCar.Location = new System.Drawing.Point(9, 50);
 			this.TabTicketCar.Margin = new System.Windows.Forms.Padding(2);
 			this.TabTicketCar.Name = "TabTicketCar";
 			this.TabTicketCar.SelectedIndex = 0;
 			this.TabTicketCar.Size = new System.Drawing.Size(491, 361);
 			this.TabTicketCar.TabIndex = 6;
-			// 
-			// tabPage1
-			// 
-			this.tabPage1.Controls.Add(this.GroupBoxTicketCar);
-			this.tabPage1.Controls.Add(this.ExecutarTicketCar);
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(483, 335);
-			this.tabPage1.TabIndex = 5;
-			this.tabPage1.Text = "TicketCar";
-			this.tabPage1.UseVisualStyleBackColor = true;
-			// 
-			// GroupBoxTicketCar
-			// 
-			this.GroupBoxTicketCar.Controls.Add(this.TextBoxDocumentoFiscal);
-			this.GroupBoxTicketCar.Controls.Add(this.TextBoxNumeroSerial);
-			this.GroupBoxTicketCar.Controls.Add(this.LabelNumeroDocFiscal);
-			this.GroupBoxTicketCar.Controls.Add(this.LabelNumeroSerial);
-			this.GroupBoxTicketCar.Controls.Add(this.NumericUpDownValorPagamentoTicketCar);
-			this.GroupBoxTicketCar.Controls.Add(this.LabelValorTicketCar);
-			this.GroupBoxTicketCar.Location = new System.Drawing.Point(5, 12);
-			this.GroupBoxTicketCar.Margin = new System.Windows.Forms.Padding(2);
-			this.GroupBoxTicketCar.Name = "GroupBoxTicketCar";
-			this.GroupBoxTicketCar.Padding = new System.Windows.Forms.Padding(2);
-			this.GroupBoxTicketCar.Size = new System.Drawing.Size(473, 285);
-			this.GroupBoxTicketCar.TabIndex = 40;
-			this.GroupBoxTicketCar.TabStop = false;
-			this.GroupBoxTicketCar.Text = "Dados de Pagamento Ticket Car";
-			// 
-			// TextBoxDocumentoFiscal
-			// 
-			this.TextBoxDocumentoFiscal.Location = new System.Drawing.Point(370, 71);
-			this.TextBoxDocumentoFiscal.Margin = new System.Windows.Forms.Padding(2);
-			this.TextBoxDocumentoFiscal.Name = "TextBoxDocumentoFiscal";
-			this.TextBoxDocumentoFiscal.Size = new System.Drawing.Size(103, 20);
-			this.TextBoxDocumentoFiscal.TabIndex = 49;
-			// 
-			// TextBoxNumeroSerial
-			// 
-			this.TextBoxNumeroSerial.Location = new System.Drawing.Point(143, 71);
-			this.TextBoxNumeroSerial.Margin = new System.Windows.Forms.Padding(2);
-			this.TextBoxNumeroSerial.Name = "TextBoxNumeroSerial";
-			this.TextBoxNumeroSerial.Size = new System.Drawing.Size(108, 20);
-			this.TextBoxNumeroSerial.TabIndex = 48;
-			// 
-			// LabelNumeroDocFiscal
-			// 
-			this.LabelNumeroDocFiscal.AutoSize = true;
-			this.LabelNumeroDocFiscal.Location = new System.Drawing.Point(265, 74);
-			this.LabelNumeroDocFiscal.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.LabelNumeroDocFiscal.Name = "LabelNumeroDocFiscal";
-			this.LabelNumeroDocFiscal.Size = new System.Drawing.Size(103, 13);
-			this.LabelNumeroDocFiscal.TabIndex = 41;
-			this.LabelNumeroDocFiscal.Text = "Numero Doc. Fiscal:";
-			// 
-			// LabelNumeroSerial
-			// 
-			this.LabelNumeroSerial.AutoSize = true;
-			this.LabelNumeroSerial.Location = new System.Drawing.Point(12, 74);
-			this.LabelNumeroSerial.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.LabelNumeroSerial.Name = "LabelNumeroSerial";
-			this.LabelNumeroSerial.Size = new System.Drawing.Size(127, 13);
-			this.LabelNumeroSerial.TabIndex = 40;
-			this.LabelNumeroSerial.Text = "Número de Série do ECF:";
-			// 
-			// NumericUpDownValorPagamentoTicketCar
-			// 
-			this.NumericUpDownValorPagamentoTicketCar.DecimalPlaces = 2;
-			this.NumericUpDownValorPagamentoTicketCar.Location = new System.Drawing.Point(53, 28);
-			this.NumericUpDownValorPagamentoTicketCar.Margin = new System.Windows.Forms.Padding(2);
-			this.NumericUpDownValorPagamentoTicketCar.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-			this.NumericUpDownValorPagamentoTicketCar.Name = "NumericUpDownValorPagamentoTicketCar";
-			this.NumericUpDownValorPagamentoTicketCar.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.NumericUpDownValorPagamentoTicketCar.Size = new System.Drawing.Size(108, 20);
-			this.NumericUpDownValorPagamentoTicketCar.TabIndex = 28;
-			this.NumericUpDownValorPagamentoTicketCar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.NumericUpDownValorPagamentoTicketCar.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            131072});
-			// 
-			// LabelValorTicketCar
-			// 
-			this.LabelValorTicketCar.AutoSize = true;
-			this.LabelValorTicketCar.Location = new System.Drawing.Point(12, 31);
-			this.LabelValorTicketCar.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.LabelValorTicketCar.Name = "LabelValorTicketCar";
-			this.LabelValorTicketCar.Size = new System.Drawing.Size(34, 13);
-			this.LabelValorTicketCar.TabIndex = 21;
-			this.LabelValorTicketCar.Text = "Valor:";
-			// 
-			// ExecutarTicketCar
-			// 
-			this.ExecutarTicketCar.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ExecutarTicketCar.Location = new System.Drawing.Point(346, 303);
-			this.ExecutarTicketCar.Margin = new System.Windows.Forms.Padding(2);
-			this.ExecutarTicketCar.Name = "ExecutarTicketCar";
-			this.ExecutarTicketCar.Size = new System.Drawing.Size(122, 28);
-			this.ExecutarTicketCar.TabIndex = 35;
-			this.ExecutarTicketCar.Text = "Executar Operação";
-			this.ExecutarTicketCar.UseVisualStyleBackColor = true;
-			this.ExecutarTicketCar.Click += new System.EventHandler(this.OnExecutarPagamentoTicketCarClick);
 			// 
 			// PinpadTab
 			// 
@@ -1034,133 +877,6 @@
 			this.ButtonSolicitarInformacaoPinpad.UseVisualStyleBackColor = true;
 			this.ButtonSolicitarInformacaoPinpad.Click += new System.EventHandler(this.OnSolicitarInformacaoPinpadClick);
 			// 
-			// tabPage2
-			// 
-			this.tabPage2.Controls.Add(this.ExecutarRecarga);
-			this.tabPage2.Controls.Add(this.label4);
-			this.tabPage2.Controls.Add(this.groupBox2);
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(483, 335);
-			this.tabPage2.TabIndex = 5;
-			this.tabPage2.Text = "Recarga";
-			this.tabPage2.UseVisualStyleBackColor = true;
-			// 
-			// ExecutarRecarga
-			// 
-			this.ExecutarRecarga.Location = new System.Drawing.Point(320, 297);
-			this.ExecutarRecarga.Name = "ExecutarRecarga";
-			this.ExecutarRecarga.Size = new System.Drawing.Size(122, 28);
-			this.ExecutarRecarga.TabIndex = 10;
-			this.ExecutarRecarga.Text = "Executar Operação";
-			this.ExecutarRecarga.UseVisualStyleBackColor = true;
-			this.ExecutarRecarga.Click += new System.EventHandler(this.OnExecutarRecargaClick);
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(20, 32);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(57, 13);
-			this.label4.TabIndex = 0;
-			this.label4.Text = "Operadora";
-			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.Add(this.ComboBoxOperadorasRecarga);
-			this.groupBox2.Controls.Add(this.label7);
-			this.groupBox2.Controls.Add(this.NumericUpDownNumeroRecarga);
-			this.groupBox2.Controls.Add(this.NumericUpDownDDDRecarga);
-			this.groupBox2.Controls.Add(this.label5);
-			this.groupBox2.Controls.Add(this.label8);
-			this.groupBox2.Controls.Add(this.ComboBoxProdutosRecarga);
-			this.groupBox2.Controls.Add(this.label6);
-			this.groupBox2.Controls.Add(this.NumericUpDownValorRecarga);
-			this.groupBox2.Location = new System.Drawing.Point(6, 7);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(436, 284);
-			this.groupBox2.TabIndex = 11;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Dados da Recarga";
-			// 
-			// ComboBoxOperadorasRecarga
-			// 
-			this.ComboBoxOperadorasRecarga.FormattingEnabled = true;
-			this.ComboBoxOperadorasRecarga.Location = new System.Drawing.Point(16, 41);
-			this.ComboBoxOperadorasRecarga.Name = "ComboBoxOperadorasRecarga";
-			this.ComboBoxOperadorasRecarga.Size = new System.Drawing.Size(121, 21);
-			this.ComboBoxOperadorasRecarga.TabIndex = 1;
-			this.ComboBoxOperadorasRecarga.SelectedValueChanged += new System.EventHandler(this.OnComboBoxOperadorasRecargaSelectedValueChanged);
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(262, 25);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(44, 13);
-			this.label7.TabIndex = 6;
-			this.label7.Text = "Número";
-			// 
-			// NumericUpDownNumeroRecarga
-			// 
-			this.NumericUpDownNumeroRecarga.Location = new System.Drawing.Point(265, 41);
-			this.NumericUpDownNumeroRecarga.Name = "NumericUpDownNumeroRecarga";
-			this.NumericUpDownNumeroRecarga.Size = new System.Drawing.Size(120, 20);
-			this.NumericUpDownNumeroRecarga.TabIndex = 7;
-			this.NumericUpDownNumeroRecarga.ValueChanged += new System.EventHandler(this.OnNumericUpDownNumeroRecargaValueChanged);
-			// 
-			// NumericUpDownDDDRecarga
-			// 
-			this.NumericUpDownDDDRecarga.Location = new System.Drawing.Point(265, 93);
-			this.NumericUpDownDDDRecarga.Name = "NumericUpDownDDDRecarga";
-			this.NumericUpDownDDDRecarga.Size = new System.Drawing.Size(120, 20);
-			this.NumericUpDownDDDRecarga.TabIndex = 9;
-			this.NumericUpDownDDDRecarga.ValueChanged += new System.EventHandler(this.OnNumericUpDownDDDRecargaValueChanged);
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(14, 76);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(44, 13);
-			this.label5.TabIndex = 2;
-			this.label5.Text = "Produto";
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(262, 76);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(31, 13);
-			this.label8.TabIndex = 8;
-			this.label8.Text = "DDD";
-			// 
-			// ComboBoxProdutosRecarga
-			// 
-			this.ComboBoxProdutosRecarga.FormattingEnabled = true;
-			this.ComboBoxProdutosRecarga.Location = new System.Drawing.Point(17, 93);
-			this.ComboBoxProdutosRecarga.Name = "ComboBoxProdutosRecarga";
-			this.ComboBoxProdutosRecarga.Size = new System.Drawing.Size(121, 21);
-			this.ComboBoxProdutosRecarga.TabIndex = 3;
-			this.ComboBoxProdutosRecarga.SelectedIndexChanged += new System.EventHandler(this.OnComboBoxProdutosRecargaSelectedIndexChanged);
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(14, 139);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(31, 13);
-			this.label6.TabIndex = 4;
-			this.label6.Text = "Valor";
-			// 
-			// NumericUpDownValorRecarga
-			// 
-			this.NumericUpDownValorRecarga.Location = new System.Drawing.Point(17, 155);
-			this.NumericUpDownValorRecarga.Name = "NumericUpDownValorRecarga";
-			this.NumericUpDownValorRecarga.Size = new System.Drawing.Size(120, 20);
-			this.NumericUpDownValorRecarga.TabIndex = 5;
-			// 
 			// MultiLojaTab
 			// 
 			this.MultiLojaTab.Controls.Add(this.ButtonAtivarLoja);
@@ -1210,146 +926,6 @@
 			this.SelecionarCnpjLabel.Size = new System.Drawing.Size(90, 13);
 			this.SelecionarCnpjLabel.TabIndex = 0;
 			this.SelecionarCnpjLabel.Text = "Selecionar CNPJ:";
-			// 
-			// tabPreAuth
-			// 
-			this.tabPreAuth.Controls.Add(this.groupBox4);
-			this.tabPreAuth.Controls.Add(this.groupBox3);
-			this.tabPreAuth.Location = new System.Drawing.Point(4, 22);
-			this.tabPreAuth.Name = "tabPreAuth";
-			this.tabPreAuth.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPreAuth.Size = new System.Drawing.Size(483, 335);
-			this.tabPreAuth.TabIndex = 7;
-			this.tabPreAuth.Text = "Pré Autorização";
-			this.tabPreAuth.UseVisualStyleBackColor = true;
-			// 
-			// groupBox4
-			// 
-			this.groupBox4.Controls.Add(this.CapturaPreAutorizacaoValor);
-			this.groupBox4.Controls.Add(this.label10);
-			this.groupBox4.Controls.Add(this.lblControle);
-			this.groupBox4.Controls.Add(this.txtCapturaPreAutorizacaoControle);
-			this.groupBox4.Controls.Add(this.btnCapturarPreAutorizacao);
-			this.groupBox4.Location = new System.Drawing.Point(15, 175);
-			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(451, 139);
-			this.groupBox4.TabIndex = 1;
-			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "Confirmar Pré Autorização";
-			// 
-			// CapturaPreAutorizacaoValor
-			// 
-			this.CapturaPreAutorizacaoValor.DecimalPlaces = 2;
-			this.CapturaPreAutorizacaoValor.Location = new System.Drawing.Point(205, 54);
-			this.CapturaPreAutorizacaoValor.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-			this.CapturaPreAutorizacaoValor.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            131072});
-			this.CapturaPreAutorizacaoValor.Name = "CapturaPreAutorizacaoValor";
-			this.CapturaPreAutorizacaoValor.Size = new System.Drawing.Size(98, 20);
-			this.CapturaPreAutorizacaoValor.TabIndex = 6;
-			this.CapturaPreAutorizacaoValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.CapturaPreAutorizacaoValor.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            131072});
-			// 
-			// label10
-			// 
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(203, 33);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(31, 13);
-			this.label10.TabIndex = 5;
-			this.label10.Text = "Valor";
-			// 
-			// lblControle
-			// 
-			this.lblControle.AutoSize = true;
-			this.lblControle.Location = new System.Drawing.Point(19, 33);
-			this.lblControle.Name = "lblControle";
-			this.lblControle.Size = new System.Drawing.Size(46, 13);
-			this.lblControle.TabIndex = 4;
-			this.lblControle.Text = "Controle";
-			// 
-			// txtCapturaPreAutorizacaoControle
-			// 
-			this.txtCapturaPreAutorizacaoControle.Location = new System.Drawing.Point(19, 54);
-			this.txtCapturaPreAutorizacaoControle.Name = "txtCapturaPreAutorizacaoControle";
-			this.txtCapturaPreAutorizacaoControle.Size = new System.Drawing.Size(170, 20);
-			this.txtCapturaPreAutorizacaoControle.TabIndex = 3;
-			// 
-			// btnCapturarPreAutorizacao
-			// 
-			this.btnCapturarPreAutorizacao.Location = new System.Drawing.Point(331, 33);
-			this.btnCapturarPreAutorizacao.Name = "btnCapturarPreAutorizacao";
-			this.btnCapturarPreAutorizacao.Size = new System.Drawing.Size(105, 83);
-			this.btnCapturarPreAutorizacao.TabIndex = 1;
-			this.btnCapturarPreAutorizacao.Text = "Capturar Pré Autorização de Crédito";
-			this.btnCapturarPreAutorizacao.UseVisualStyleBackColor = true;
-			this.btnCapturarPreAutorizacao.Click += new System.EventHandler(this.btnCapturarPreAutorizacao_Click);
-			// 
-			// groupBox3
-			// 
-			this.groupBox3.Controls.Add(this.CriarPreAutorizacaoValor);
-			this.groupBox3.Controls.Add(this.label9);
-			this.groupBox3.Controls.Add(this.btnCriarPreAutorizacao);
-			this.groupBox3.Location = new System.Drawing.Point(15, 15);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(451, 132);
-			this.groupBox3.TabIndex = 0;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Criar Pré Autorização";
-			// 
-			// CriarPreAutorizacaoValor
-			// 
-			this.CriarPreAutorizacaoValor.DecimalPlaces = 2;
-			this.CriarPreAutorizacaoValor.Location = new System.Drawing.Point(22, 62);
-			this.CriarPreAutorizacaoValor.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-			this.CriarPreAutorizacaoValor.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            131072});
-			this.CriarPreAutorizacaoValor.Name = "CriarPreAutorizacaoValor";
-			this.CriarPreAutorizacaoValor.Size = new System.Drawing.Size(120, 20);
-			this.CriarPreAutorizacaoValor.TabIndex = 3;
-			this.CriarPreAutorizacaoValor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.CriarPreAutorizacaoValor.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            131072});
-			// 
-			// label9
-			// 
-			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(19, 39);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(31, 13);
-			this.label9.TabIndex = 2;
-			this.label9.Text = "Valor";
-			// 
-			// btnCriarPreAutorizacao
-			// 
-			this.btnCriarPreAutorizacao.Location = new System.Drawing.Point(331, 26);
-			this.btnCriarPreAutorizacao.Name = "btnCriarPreAutorizacao";
-			this.btnCriarPreAutorizacao.Size = new System.Drawing.Size(105, 88);
-			this.btnCriarPreAutorizacao.TabIndex = 0;
-			this.btnCriarPreAutorizacao.Text = "Criar Pré Autorização de Crédito";
-			this.btnCriarPreAutorizacao.UseVisualStyleBackColor = true;
-			this.btnCriarPreAutorizacao.Click += new System.EventHandler(this.btnCriarPreAutorizacao_Click);
 			// 
 			// label3
 			// 
@@ -1564,30 +1140,12 @@
 			this.GroupBoxDadosCancelamento.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownNumeroControleCancelamento)).EndInit();
 			this.TabTicketCar.ResumeLayout(false);
-			this.tabPage1.ResumeLayout(false);
-			this.GroupBoxTicketCar.ResumeLayout(false);
-			this.GroupBoxTicketCar.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownValorPagamentoTicketCar)).EndInit();
 			this.PinpadTab.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			this.tabPage2.ResumeLayout(false);
-			this.tabPage2.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
-			this.groupBox2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownNumeroRecarga)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownDDDRecarga)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownValorRecarga)).EndInit();
 			this.MultiLojaTab.ResumeLayout(false);
 			this.SelecionarLojaGroupBox.ResumeLayout(false);
 			this.SelecionarLojaGroupBox.PerformLayout();
-			this.tabPreAuth.ResumeLayout(false);
-			this.groupBox4.ResumeLayout(false);
-			this.groupBox4.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.CapturaPreAutorizacaoValor)).EndInit();
-			this.groupBox3.ResumeLayout(false);
-			this.groupBox3.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.CriarPreAutorizacaoValor)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.NumericUpDownQuantidadeDePagamentosMultiTef)).EndInit();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
@@ -1661,49 +1219,16 @@
 		private System.Windows.Forms.RadioButton RadioButtonUsarMultiTef;
 		private System.Windows.Forms.Label LabelQuantidadeDePagamentosMultiTef;
 		private System.Windows.Forms.NumericUpDown NumericUpDownQuantidadeDePagamentosMultiTef;
-		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.NumericUpDown NumericUpDownValorRecarga;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.ComboBox ComboBoxProdutosRecarga;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.ComboBox ComboBoxOperadorasRecarga;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.NumericUpDown NumericUpDownDDDRecarga;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.NumericUpDown NumericUpDownNumeroRecarga;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Button ExecutarRecarga;
-		private System.Windows.Forms.NumericUpDown NumericUpDownValorPagamentoTicketCar;
-		private System.Windows.Forms.Label LabelValorTicketCar;
-		private System.Windows.Forms.Button ExecutarTicketCar;
 		private System.Windows.Forms.ComboBox ComboBoxTipoParcelamentoPagamentoCredito;
-		private System.Windows.Forms.GroupBox GroupBoxTicketCar;
-		private System.Windows.Forms.Label LabelNumeroSerial;
-		private System.Windows.Forms.Label LabelNumeroDocFiscal;
-		private System.Windows.Forms.TextBox TextBoxNumeroSerial;
-		private System.Windows.Forms.TextBox TextBoxDocumentoFiscal;
 		private System.Windows.Forms.Label lblConfiguracaoInterface;
 		private System.Windows.Forms.RadioButton RadioButtonInterfaceVisivel;
 		private System.Windows.Forms.RadioButton RadioButtonInterfaceInvisivel;
 		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.TabPage tabPage2;
-		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.TabPage MultiLojaTab;
 		private System.Windows.Forms.Button ButtonAtivarLoja;
 		private System.Windows.Forms.GroupBox SelecionarLojaGroupBox;
 		private System.Windows.Forms.ComboBox ComboBoxCnpjLojas;
 		private System.Windows.Forms.Label SelecionarCnpjLabel;
-        private System.Windows.Forms.TabPage tabPreAuth;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button btnCriarPreAutorizacao;
-        private System.Windows.Forms.Button btnCapturarPreAutorizacao;
-        private System.Windows.Forms.TextBox txtCapturaPreAutorizacaoControle;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label lblControle;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.NumericUpDown CriarPreAutorizacaoValor;
-        private System.Windows.Forms.NumericUpDown CapturaPreAutorizacaoValor;
 		private System.Windows.Forms.Button ExecutarCancelarDebito;
 		private System.Windows.Forms.Button ExecutarCancelarCrediario;
 		private System.Windows.Forms.Button ExecutarCancelarCredito;
